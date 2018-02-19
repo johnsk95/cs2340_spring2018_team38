@@ -31,7 +31,7 @@ public class LogIn extends AppCompatActivity {
         Log.d("user", nameBox.getText().toString());
         Log.d("pw", pwBox.getText().toString());
         //checks hardcoded ID and PW. if not correct, warning message
-        if (nameBox.getText().toString().equals("user") && pwBox.getText().toString().equals("pass")) {
+        if (MainActivity.getUserMap().containsKey(nameBox.getText().toString()) && MainActivity.getUserMap().get(nameBox.getText().toString()).getPassword().equals(pwBox.getText().toString())) {
             //final Intent intent = new Intent(this, MainScreen.class);
             startActivity(intent);
         } else {

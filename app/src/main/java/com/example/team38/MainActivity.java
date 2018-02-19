@@ -6,10 +6,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * activity for welcome screen
  */
 public class MainActivity extends AppCompatActivity {
+
+    //Map for registered users for M5
+    private static Map<String, User> userMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +27,16 @@ public class MainActivity extends AppCompatActivity {
         Log.d("WelcomeScreen", "Button Pressed");
         Intent intent = new Intent(this, LogIn.class);
         startActivity(intent);
+    }
+
+    public void onRegButtonClicked(View view) {
+        Log.d("WelcomeScreen", "REG button pressed");
+        Intent intent = new Intent(this, Register.class);
+        startActivity(intent);
+    }
+
+    public static Map<String, User> getUserMap() {
+        return userMap;
     }
 }
 
