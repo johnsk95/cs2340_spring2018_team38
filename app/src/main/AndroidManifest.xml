@@ -20,6 +20,8 @@
             android:label="Log In"/>
         <activity android:name=".MainScreen"
             android:label="main"/>
+        <activity android:name=".Register"
+            android:label="Register"/>
     </application>
 
 </manifest>
