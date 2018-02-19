@@ -30,14 +30,20 @@ public class LogIn extends AppCompatActivity {
         //view username and password
         Log.d("user", nameBox.getText().toString());
         Log.d("pw", pwBox.getText().toString());
-        //checks hardcoded ID and PW. if not correct, warning message
-        if (MainActivity.getUserMap().containsKey(nameBox.getText().toString()) && MainActivity.getUserMap().get(nameBox.getText().toString()).getPassword().equals(pwBox.getText().toString())) {
-            //final Intent intent = new Intent(this, MainScreen.class);
-            startActivity(intent);
+        //checks if the user id exists and if the password is correct, if not a warning message is displayed
+        if (MainActivity.getUserMap().containsKey(nameBox.getText().toString())) {
+            if (MainActivity.getUserMap().get(nameBox.getText().toString()).getPassword().equals(pwBox.getText().toString())) {
+                startActivity(intent);
+            } else {
+                final Context context = getApplicationContext();
+                final int duration = Toast.LENGTH_SHORT;
+                final Toast t = Toast.makeText(context, "incorrect password", duration);
+                t.show();
+            }
         } else {
             final Context context = getApplicationContext();
             final int duration = Toast.LENGTH_SHORT;
-            final Toast t = Toast.makeText(context, "login failed!", duration);
+            final Toast t = Toast.makeText(context, "the user id does not exist", duration);
             t.show();
         }
     }
