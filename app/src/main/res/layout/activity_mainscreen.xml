@@ -22,4 +22,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ListView
+        android:id="@+id/shelter_listview"
+        android:layout_width="368dp"
+        android:layout_height="439dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="67dp" />
 </android.support.constraint.ConstraintLayout>
