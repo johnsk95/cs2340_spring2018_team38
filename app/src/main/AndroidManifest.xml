@@ -16,12 +16,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LogIn"
-            android:label="Log In"/>
-        <activity android:name=".MainScreen"
-            android:label="main"/>
-        <activity android:name=".Register"
-            android:label="Register"/>
+        <activity
+            android:name=".LogIn"
+            android:label="Log In" />
+        <activity
+            android:name=".MainScreen"
+            android:label="main" />
+        <activity
+            android:name=".Register"
+            android:label="Register" />
+        <activity
+            android:name=".ShelterDetailView"
+            android:label="@string/title_activity_shelter_detail_view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

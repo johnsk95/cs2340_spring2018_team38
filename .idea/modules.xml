@@ -3,8 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/cs2340_spring2018_team38.iml" filepath="$PROJECT_DIR$/.idea/cs2340_spring2018_team38.iml" />
-      <module fileurl="file://C:\Users\Nathaniel\Google Drive\Spring 2018\CS 2340\Proj\cs2340_spring2018_team38\team38.iml" filepath="C:\Users\Nathaniel\Google Drive\Spring 2018\CS 2340\Proj\cs2340_spring2018_team38\team38.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cs2340_spring2018_team38.iml" filepath="$PROJECT_DIR$/cs2340_spring2018_team38.iml" />
     </modules>
   </component>
 </project>

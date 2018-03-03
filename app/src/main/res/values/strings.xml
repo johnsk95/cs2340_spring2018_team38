@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">team38</string>
+    <string name="title_activity_shelter_detail_view">ShelterDetailView</string>
 </resources>

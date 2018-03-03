@@ -39,6 +39,7 @@ public class MainScreen extends AppCompatActivity {
 
         homelessShelters = new ArrayList<HomelessShelter>();
 
+        // TODO Add support for parsing from database not just local file
         try {
             // Read the first line just to clear out the info part of the csv file
             String row = reader.readLine();
@@ -67,7 +68,9 @@ public class MainScreen extends AppCompatActivity {
                                     long arg3)
             {
                 HomelessShelter clicked = (HomelessShelter) adapter.getItemAtPosition(position);
-
+                Intent intent = new Intent(v.getContext(), ShelterDetailView.class);
+                intent.putExtra("HomelessShelter", clicked);
+                startActivity(intent);
             }
         });
     }
