@@ -10,6 +10,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,10 +33,12 @@ public class MainScreen extends AppCompatActivity {
 
     ListView shelterListView;
     ArrayList<HomelessShelter> homelessShelters;
+    Firebase dbref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_mainscreen);
 
         shelterListView = (ListView) findViewById(R.id.shelter_listview);
@@ -40,6 +48,20 @@ public class MainScreen extends AppCompatActivity {
         homelessShelters = new ArrayList<HomelessShelter>();
 
         // TODO Add support for parsing from database not just local file
+        Firebase db = new Firebase("https://project-42226.firebaseio.com/");
+        Firebase shelterdb = db.child("ShelterList");
+        Query shelterQuery = db.startAt(0);
+
+        shelterdb.child("value").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("database", dataSnapshot.getValue().toString());
+            }
+            @Override
+            public void onCancelled(FirebaseError databaseError) {
+            }
+        });
+
         try {
             // Read the first line just to clear out the info part of the csv file
             String row = reader.readLine();
