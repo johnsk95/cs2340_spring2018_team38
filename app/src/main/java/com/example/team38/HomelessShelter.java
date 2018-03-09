@@ -3,6 +3,7 @@ package com.example.team38;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,7 +14,6 @@ import java.util.regex.Pattern;
 public class HomelessShelter implements Parcelable {
     // 0,My Sister's House,264,Women/Children,-84.410142,33.780174,"921 Howell Mill Road, Atlanta,
     // Georgia 30318","Temporary, Emergency, Residential Recovery",(404) 367-2465
-    String[] info_parts;
     int id;
     String name;
     String capacity;
@@ -29,7 +29,7 @@ public class HomelessShelter implements Parcelable {
     // Pattern infoPattern = Pattern.compile(infoMatcher);
 
     HomelessShelter(String infostring) throws CouldNotParseInfoException {
-        info_parts = infostring.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+        String[] info_parts = infostring.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
 
         if (info_parts.length != 9) {
             throw new CouldNotParseInfoException("Error on parsing: " + infostring);
@@ -55,7 +55,7 @@ public class HomelessShelter implements Parcelable {
     }
 
     protected HomelessShelter(Parcel in) {
-        info_parts = in.createStringArray();
+
         id = in.readInt();
         name = in.readString();
         capacity = in.readString();
@@ -67,9 +67,21 @@ public class HomelessShelter implements Parcelable {
         phoneNumber = in.readString();
     }
 
+    public HomelessShelter(HashMap<String, Object> shelter_dictionary) {
+
+        name = (String) shelter_dictionary.get("name");
+        capacity = (String) shelter_dictionary.get("capacity");
+        allowedTenants = (String) shelter_dictionary.get("allowedTenants");
+        latitude = (Double) shelter_dictionary.get("latitude");
+        longitude = (Double) shelter_dictionary.get("longitude");
+        address = (String) shelter_dictionary.get("address");
+        shelterType = (String) shelter_dictionary.get("shelterType");
+        phoneNumber = (String) shelter_dictionary.get("phoneNumber");
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(info_parts);
+
         dest.writeInt(id);
         dest.writeString(name);
         dest.writeString(capacity);

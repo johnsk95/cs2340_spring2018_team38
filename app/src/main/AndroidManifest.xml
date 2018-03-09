@@ -21,7 +21,7 @@
             android:name=".LogIn"
             android:label="Log In" />
         <activity
-            android:name=".MainScreen"
+            android:name=".ShelterListView"
             android:label="main" />
         <activity
             android:name=".Register"

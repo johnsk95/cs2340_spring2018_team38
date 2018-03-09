@@ -10,17 +10,21 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.Query;
-import com.firebase.client.ValueEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.GenericTypeIndicator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Created by johnyi on 2/13/18.
@@ -29,16 +33,15 @@ import java.util.ArrayList;
  *
  */
 
-public class MainScreen extends AppCompatActivity {
+public class ShelterListView extends AppCompatActivity {
 
     ListView shelterListView;
     ArrayList<HomelessShelter> homelessShelters;
-    Firebase dbref;
+    DatabaseReference shelter_db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_mainscreen);
 
         shelterListView = (ListView) findViewById(R.id.shelter_listview);
@@ -47,22 +50,26 @@ public class MainScreen extends AppCompatActivity {
 
         homelessShelters = new ArrayList<HomelessShelter>();
 
-        // TODO Add support for parsing from database not just local file
-        Firebase db = new Firebase("https://project-42226.firebaseio.com/");
-        Firebase shelterdb = db.child("ShelterList");
-        Query shelterQuery = db.startAt(0);
-
-        shelterdb.child("value").addListenerForSingleValueEvent(new ValueEventListener() {
+        shelter_db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+                "https://project-42226.firebaseio.com/ShelterList");
+        shelter_db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("database", dataSnapshot.getValue().toString());
+                GenericTypeIndicator<ArrayList<HashMap<String, Object>>> typeIndicator =
+                        new GenericTypeIndicator<ArrayList<HashMap<String, Object>>>() {};
+                ArrayList<HashMap<String, Object>> data = dataSnapshot.getValue(typeIndicator);
+                for (HashMap<String, Object> shelter_dictionary : data) {
+                    homelessShelters.add(new HomelessShelter(shelter_dictionary));
+                }
             }
+
             @Override
-            public void onCancelled(FirebaseError databaseError) {
+            public void onCancelled(DatabaseError firebaseError) {
+                Log.e("database-error", "Failed to retrieve shelter list from firebase");
             }
         });
 
-        try {
+        /*try {
             // Read the first line just to clear out the info part of the csv file
             String row = reader.readLine();
             while ((row = reader.readLine()) != null) {
@@ -78,7 +85,7 @@ public class MainScreen extends AppCompatActivity {
             }
         } catch (IOException e) {
             throw new RuntimeException("Error in reading csv file", e);
-        }
+        }*/
         ArrayAdapter<HomelessShelter> arrayAdapter = new ArrayAdapter<HomelessShelter>(this,
                 android.R.layout.simple_list_item_1, homelessShelters);
         shelterListView.setAdapter(arrayAdapter);
@@ -99,7 +106,7 @@ public class MainScreen extends AppCompatActivity {
 
 
     public void onLogoutButtonClicked(View view) {
-        Log.d("MainScreen", "Button Pressed");
+        Log.d("ShelterListView", "Button Pressed");
         Intent intent = new Intent(this, MainActivity.class);
         // prevents screen from going back to the mainScreen when pressing back button after logout
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

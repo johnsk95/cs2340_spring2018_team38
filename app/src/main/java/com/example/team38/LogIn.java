@@ -24,7 +24,7 @@ public class LogIn extends AppCompatActivity {
 
     public void onLoginClicked(View view) {
         Log.d("LoginScreen", "Login Button Pressed");
-        Intent intent = new Intent(this, MainScreen.class);
+        Intent intent = new Intent(this, ShelterListView.class);
         final EditText nameBox = (EditText) findViewById(R.id.ID);
         final EditText pwBox = (EditText) findViewById(R.id.PW);
         //view username and password
