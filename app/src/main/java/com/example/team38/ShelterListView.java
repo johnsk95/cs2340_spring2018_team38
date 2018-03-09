@@ -1,6 +1,6 @@
 package com.example.team38;
 
-import com.example.team38.utils.ShelterSelector;
+import com.example.team38.utils.ShelterUtils;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
@@ -37,8 +37,7 @@ import java.util.Iterator;
 public class ShelterListView extends AppCompatActivity {
 
     ListView shelterListView;
-    ArrayList<HomelessShelter> homelessShelters;
-    DatabaseReference shelter_db;
+    ArrayList<HomelessShelter> shelters;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,67 +48,41 @@ public class ShelterListView extends AppCompatActivity {
 
         // To allow reuse of this same activity for the search bar, I essentially
         // add a lambda expression as an argument
-        final ShelterSelector selector = getIntent().getParcelableExtra("ShelterSelector");
-        homelessShelters = new ArrayList<HomelessShelter>();
+        shelters = getIntent().getParcelableArrayListExtra("SheltersToDisplay");
+        if (shelters == null) {
+            // NOTE: THIS CODE IS HEAVILY DUPLICATED IN SHELTER-SEARCH
+            final DatabaseReference shelter_db;
 
-        shelter_db = FirebaseDatabase.getInstance().getReferenceFromUrl(
-                "https://project-42226.firebaseio.com/ShelterList");
-        shelter_db.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                GenericTypeIndicator<ArrayList<HashMap<String, Object>>> typeIndicator =
-                        new GenericTypeIndicator<ArrayList<HashMap<String, Object>>>() {};
-                Iterator<HashMap<String, Object>> data_iterator =
-                        dataSnapshot.getValue(typeIndicator).iterator();
-                HashMap<String, Object> datum;
-                while (data_iterator.hasNext()) {
-                    datum = data_iterator.next();
-                    HomelessShelter shelter = new HomelessShelter(datum);
-
-                    if (selector == null || selector.should_select(shelter)) {
-                        homelessShelters.add(new HomelessShelter(datum));
+            shelters = new ArrayList<HomelessShelter>();
+            shelter_db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+                    "https://project-42226.firebaseio.com/ShelterList");
+            shelter_db.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    GenericTypeIndicator<ArrayList<HashMap<String, Object>>> typeIndicator =
+                            new GenericTypeIndicator<ArrayList<HashMap<String, Object>>>() {};
+                    Iterator<HashMap<String, Object>> data_iterator =
+                            dataSnapshot.getValue(typeIndicator).iterator();
+                    HashMap<String, Object> datum;
+                    while (data_iterator.hasNext()) {
+                        datum = data_iterator.next();
+                        shelters.add(new HomelessShelter(datum));
                     }
+                    refreshShelterListView();
                 }
-                refreshListView();
-            }
 
-            @Override
-            public void onCancelled(DatabaseError firebaseError) {
-                // Fall back on reading from the csv file
-                try {
-                    // Read the first line just to clear out the info part of the csv file
-                    InputStream instream =
-                            getResources().openRawResource(R.raw.homeless_shelter_spreadsheet);
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
-                    // Studio marks the next line as redundant, but it's necessary to skip the
-                    // first line in the csv which names all of the fields
-                    String row = reader.readLine();
-                    while ((row = reader.readLine()) != null) {
-                        HomelessShelter toAdd;
-                        try {
-                            toAdd = new HomelessShelter(row);
-                        } catch (CouldNotParseInfoException e) {
-                            Log.e("error", "Couldn't parse string", e);
-                            throw new RuntimeException("Could not parse a homeless shelter string", e);
-                        }
-                        if (selector == null || selector.should_select(toAdd)) {
-                            homelessShelters.add(toAdd);
-                        }
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException("Error in reading csv file", e);
+                @Override
+                public void onCancelled(DatabaseError firebaseError) {
+                    refreshShelterListView();
                 }
-                refreshListView();
-            }
-        });
-        refreshListView();
+            });
+        }
+        refreshShelterListView();
     }
-
-    public void refreshListView() {
+    public void refreshShelterListView() {
         ArrayAdapter<HomelessShelter> arrayAdapter = new ArrayAdapter<HomelessShelter>(this,
-                android.R.layout.simple_list_item_1, homelessShelters);
+                android.R.layout.simple_list_item_1, shelters);
         shelterListView.setAdapter(arrayAdapter);
-
         shelterListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
