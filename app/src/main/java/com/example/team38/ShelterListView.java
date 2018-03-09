@@ -1,5 +1,6 @@
 package com.example.team38;
 
+import com.example.team38.utils.ShelterSelector;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
@@ -45,9 +46,10 @@ public class ShelterListView extends AppCompatActivity {
         setContentView(R.layout.activity_mainscreen);
 
         shelterListView = (ListView) findViewById(R.id.shelter_listview);
-        InputStream is = getResources().openRawResource(R.raw.homeless_shelter_spreadsheet);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 
+        // To allow reuse of this same activity for the search bar, I essentially
+        // add a lambda expression as an argument
+        final ShelterSelector selector = getIntent().getParcelableExtra("ShelterSelector");
         homelessShelters = new ArrayList<HomelessShelter>();
 
         shelter_db = FirebaseDatabase.getInstance().getReferenceFromUrl(
@@ -57,35 +59,53 @@ public class ShelterListView extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<ArrayList<HashMap<String, Object>>> typeIndicator =
                         new GenericTypeIndicator<ArrayList<HashMap<String, Object>>>() {};
-                ArrayList<HashMap<String, Object>> data = dataSnapshot.getValue(typeIndicator);
-                for (HashMap<String, Object> shelter_dictionary : data) {
-                    homelessShelters.add(new HomelessShelter(shelter_dictionary));
+                Iterator<HashMap<String, Object>> data_iterator =
+                        dataSnapshot.getValue(typeIndicator).iterator();
+                HashMap<String, Object> datum;
+                while (data_iterator.hasNext()) {
+                    datum = data_iterator.next();
+                    HomelessShelter shelter = new HomelessShelter(datum);
+
+                    if (selector == null || selector.should_select(shelter)) {
+                        homelessShelters.add(new HomelessShelter(datum));
+                    }
                 }
+                refreshListView();
             }
 
             @Override
             public void onCancelled(DatabaseError firebaseError) {
-                Log.e("database-error", "Failed to retrieve shelter list from firebase");
+                // Fall back on reading from the csv file
+                try {
+                    // Read the first line just to clear out the info part of the csv file
+                    InputStream instream =
+                            getResources().openRawResource(R.raw.homeless_shelter_spreadsheet);
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
+                    // Studio marks the next line as redundant, but it's necessary to skip the
+                    // first line in the csv which names all of the fields
+                    String row = reader.readLine();
+                    while ((row = reader.readLine()) != null) {
+                        HomelessShelter toAdd;
+                        try {
+                            toAdd = new HomelessShelter(row);
+                        } catch (CouldNotParseInfoException e) {
+                            Log.e("error", "Couldn't parse string", e);
+                            throw new RuntimeException("Could not parse a homeless shelter string", e);
+                        }
+                        if (selector == null || selector.should_select(toAdd)) {
+                            homelessShelters.add(toAdd);
+                        }
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException("Error in reading csv file", e);
+                }
+                refreshListView();
             }
         });
+        refreshListView();
+    }
 
-        /*try {
-            // Read the first line just to clear out the info part of the csv file
-            String row = reader.readLine();
-            while ((row = reader.readLine()) != null) {
-                HomelessShelter toAdd;
-                try {
-                    toAdd = new HomelessShelter(row);
-                    // Log.d("application", "Created shelter " + toAdd);
-                } catch (CouldNotParseInfoException e) {
-                    Log.e("error", "Couldn't parse string", e);
-                    throw new RuntimeException("Could not parse a homeless shelter string", e);
-                }
-                homelessShelters.add(toAdd);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Error in reading csv file", e);
-        }*/
+    public void refreshListView() {
         ArrayAdapter<HomelessShelter> arrayAdapter = new ArrayAdapter<HomelessShelter>(this,
                 android.R.layout.simple_list_item_1, homelessShelters);
         shelterListView.setAdapter(arrayAdapter);
@@ -103,7 +123,6 @@ public class ShelterListView extends AppCompatActivity {
             }
         });
     }
-
 
     public void onLogoutButtonClicked(View view) {
         Log.d("ShelterListView", "Button Pressed");

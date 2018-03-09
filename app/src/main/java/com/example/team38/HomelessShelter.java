@@ -17,7 +17,7 @@ public class HomelessShelter implements Parcelable {
     int id;
     String name;
     String capacity;
-    String allowedTenants;
+    String allowed;
     double latitude;
     double longitude;
     String address;
@@ -45,7 +45,7 @@ public class HomelessShelter implements Parcelable {
         id = Integer.parseInt(info_parts[0]);
         name = info_parts[1];
         capacity = info_parts[2];
-        allowedTenants = info_parts[3];
+        allowed = info_parts[3];
         latitude = Double.parseDouble(info_parts[4]);
         longitude = Double.parseDouble(info_parts[5]);
         address = info_parts[6];
@@ -59,7 +59,7 @@ public class HomelessShelter implements Parcelable {
         id = in.readInt();
         name = in.readString();
         capacity = in.readString();
-        allowedTenants = in.readString();
+        allowed = in.readString();
         latitude = in.readDouble();
         longitude = in.readDouble();
         address = in.readString();
@@ -71,7 +71,7 @@ public class HomelessShelter implements Parcelable {
 
         name = (String) shelter_dictionary.get("name");
         capacity = (String) shelter_dictionary.get("capacity");
-        allowedTenants = (String) shelter_dictionary.get("allowedTenants");
+        allowed = (String) shelter_dictionary.get("allowedTenants");
         latitude = (Double) shelter_dictionary.get("latitude");
         longitude = (Double) shelter_dictionary.get("longitude");
         address = (String) shelter_dictionary.get("address");
@@ -85,7 +85,7 @@ public class HomelessShelter implements Parcelable {
         dest.writeInt(id);
         dest.writeString(name);
         dest.writeString(capacity);
-        dest.writeString(allowedTenants);
+        dest.writeString(allowed);
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);
         dest.writeString(address);
