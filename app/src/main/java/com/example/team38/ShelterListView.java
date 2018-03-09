@@ -131,4 +131,8 @@ public class ShelterListView extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+    public void onSearchViewButtonClicked(View view) {
+        Intent intent = new Intent(this, ShelterSearch.class);
+        startActivity(intent);
+    }
 }

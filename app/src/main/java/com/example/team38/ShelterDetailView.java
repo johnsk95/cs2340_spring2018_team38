@@ -22,7 +22,7 @@ public class ShelterDetailView extends AppCompatActivity {
     }
     String shelterToTextString(HomelessShelter shelter) {
         return "Name: \r\r" + shelter.name + "\n\nCapacity: \r\r" + shelter.capacity
-                + "\n\nAllowed Tenants: \r\r" + shelter.allowedTenants + "\n\nAddress: \r\r"
+                + "\n\nAllowed Tenants: \r\r" + shelter.allowed + "\n\nAddress: \r\r"
                 + shelter.address + "\n\nLatitude: \r\r" + shelter.latitude + "\nLongitude: \r\r"
                 + shelter.longitude + "\n\nServices: \r\r" + shelter.shelterType +
                 "\n\nPhone Number: \r\r" + shelter.phoneNumber;
