@@ -71,12 +71,12 @@ public class HomelessShelter implements Parcelable {
 
         name = (String) shelter_dictionary.get("name");
         capacity = (String) shelter_dictionary.get("capacity");
-        allowed = (String) shelter_dictionary.get("allowedTenants");
+        allowed = (String) shelter_dictionary.get("allowed");
         latitude = (Double) shelter_dictionary.get("latitude");
         longitude = (Double) shelter_dictionary.get("longitude");
         address = (String) shelter_dictionary.get("address");
-        shelterType = (String) shelter_dictionary.get("shelterType");
-        phoneNumber = (String) shelter_dictionary.get("phoneNumber");
+        shelterType = (String) shelter_dictionary.get("services");
+        phoneNumber = (String) shelter_dictionary.get("phone");
     }
 
     @Override
