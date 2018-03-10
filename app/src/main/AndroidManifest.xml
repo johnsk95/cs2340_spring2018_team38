@@ -35,6 +35,14 @@
             android:name=".ShelterSearch"
             android:label="@string/title_activity_shelter_search"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBEBc2D_sCooEezB9LiJkQWBPEwus3qLoc"/>
+        <!--
+        TODO:
+        Request permissions for location data & use appropriately
+        https://developers.google.com/maps/documentation/android-api/location
+        !-->
     </application>
 
 </manifest>
