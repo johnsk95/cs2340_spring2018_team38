@@ -190,7 +190,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 } else {
 
                     // disable functionality that depends on location this permission.
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
                     if (marker != null) {
                         shelterMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 11));
                     }
