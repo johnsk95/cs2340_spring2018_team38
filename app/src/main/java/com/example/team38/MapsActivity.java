@@ -81,19 +81,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             //Request Location Permission
             checkLocationPermission();
         }
-        client.requestLocationUpdates(request, locationCallback, Looper.myLooper());
-        shelterMap.setMyLocationEnabled(true);
 
         // adds the shelter markers to the map
         int counter = 0;
         for (HomelessShelter shelter: shelters) {
             LatLng shelterLoc = new LatLng(shelter.longitude, shelter.latitude);
-            Marker shelterMarker = shelterMap.addMarker(new MarkerOptions()
+            marker = shelterMap.addMarker(new MarkerOptions()
                     .position(shelterLoc)
                     .title(shelter.name)
             .snippet("Phone: " + shelter.phoneNumber));
             // sets tag to location in shelters array
-            shelterMarker.setTag(counter);
+            marker.setTag(counter);
             counter++;
         }
         // starts ShelterDetailView activity when a points window is clicked
@@ -191,9 +189,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 } else {
 
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    // disable functionality that depends on location this permission.
                     Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
+                    if (marker != null) {
+                        shelterMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 11));
+                    }
                 }
                 return;
             }
