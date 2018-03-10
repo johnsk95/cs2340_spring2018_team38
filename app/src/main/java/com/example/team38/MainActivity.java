@@ -14,6 +14,7 @@ import java.util.Map;
  */
 public class MainActivity extends AppCompatActivity {
 
+    //TODO: Put login info on Firebase
     //Map for registered users for M5
     private static Map<String, User> userMap = new HashMap<>();
 
