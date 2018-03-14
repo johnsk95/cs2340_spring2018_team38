@@ -11,6 +11,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 /**
  * Created by Nathaniel on 2/18/2018.
  *
@@ -46,22 +52,32 @@ public class Register extends AppCompatActivity {
     public void onRegisterClicked(View view) {
         Log.d("RegScreen", "Register Button Pressed");
         //registers as a new user if the id is not already in use, shows an error message if the id is in use
-        if (!MainActivity.getUserMap().containsKey(idBox.getText().toString())) {
-            //creates a new user
-            User user = new User(nameBox.getText().toString(), idBox.getText().toString(), passBox.getText().toString(),(AccountType) accountType.getSelectedItem());
-            //log of new user's info
-            Log.d("newUser", "NEW USER: " + user.getName() + " " + user.getId() + " " + user.getPassword() + " " + user.getAccountType().toString());
-            //adds user to userMap
-            MainActivity.getUserMap().put(user.getId(), user);
-            finish();
-        } else {
-            final Context context = getApplicationContext();
-            final int duration = Toast.LENGTH_SHORT;
-            final Toast t = Toast.makeText(context, "registration failed: userID is already in use", duration);
-            t.show();
-        }
+        final String uid = idBox.getText().toString();
+        final String pass = passBox.getText().toString();
+        final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+                "https://project-42226.firebaseio.com/UserList");
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild(uid)) {
+                    final Context context = getApplicationContext();
+                    final int duration = Toast.LENGTH_SHORT;
+                    final Toast t = Toast.makeText(context, "registration failed: userID is already in use", duration);
+                    t.show();
+                } else {
+                    User user = new User(nameBox.getText().toString(), uid, pass, (AccountType) accountType.getSelectedItem());
+                    Log.d("newUser", "NEW USER: " + user.getName() + " " + user.getId() + " "
+                            + user.getPassword() + " " + user.getAccountType().toString());
+                    db.child(uid).setValue(user);
+                    finish();
+                }
+            }
 
-
+            @Override
+            public void onCancelled(DatabaseError firebaseError) {
+                //TODO
+            }
+        });
     }
     /**
     Goes back to the main screen is cancel is pressed
