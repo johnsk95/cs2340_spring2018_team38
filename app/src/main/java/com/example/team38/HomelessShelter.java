@@ -113,6 +113,17 @@ public class HomelessShelter implements Parcelable {
     public String toString(){
         return name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof HomelessShelter) {
+            HomelessShelter s = (HomelessShelter) o;
+            return id == s.id && name.equals(s.name) && latitude == s.latitude
+                    && longitude == s.longitude && address == s.address && shelterType
+                    == s.shelterType && phoneNumber == s.phoneNumber;
+        }
+        return false;
+    }
 }
 
 class CouldNotParseInfoException extends Exception {

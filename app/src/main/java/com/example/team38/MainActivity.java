@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     //TODO: Put login info on Firebase
     //Map for registered users for M5
-    private static Map<String, User> userMap = new HashMap<>();
+//    private static Map<String, User> userMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public static Map<String, User> getUserMap() {
-        return userMap;
-    }
+//    public static Map<String, User> getUserMap() {
+//        return userMap;
+//    }
 }
 
