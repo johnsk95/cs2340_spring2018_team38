@@ -100,7 +100,8 @@ public class ShelterSearch extends AppCompatActivity {
             return false;
         // TODO This will of course mean that women shelters get returned along with men
         // ones. This should be fixed (duH)
-        if (menButton.isChecked() && !s.allowed.toLowerCase().contains("men"))
+        if (menButton.isChecked() && !s.allowed.toLowerCase().replace("women",
+                "").contains("men"))
             return false;
         if (womenButton.isChecked() && !s.allowed.toLowerCase().contains("women"))
             return false;
