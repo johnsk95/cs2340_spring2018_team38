@@ -1,5 +1,6 @@
 package com.example.team38;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -7,16 +8,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class ShelterDetailView extends AppCompatActivity {
+
+    HomelessShelter shelter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelter_detail_view);
 
-        HomelessShelter shelter = getIntent().getParcelableExtra("HomelessShelter");
+        shelter = getIntent().getParcelableExtra("HomelessShelter");
         TextView infoDisplay = (TextView) findViewById(R.id.ShelterInfoBox);
 
         infoDisplay.setText(shelterToTextString(shelter));
@@ -31,6 +35,14 @@ public class ShelterDetailView extends AppCompatActivity {
     public void onMapClicked(View view) {
         Log.d("ShelterDetScreen", "Map Button Pressed");
         //brings the user to a map with the location of the selected shelter
-
+        //TODO
+    }
+    public void onReserveClicked(View view) {
+        Log.d("ShelterDetScreen", "Reserve Button Pressed");
+        final EditText resNumBox = (EditText) findViewById(R.id.resNum);
+        final int numSpots = Integer.parseInt(resNumBox.getText().toString());
+        Intent intent = new Intent(this, UserView.class);
+        User.currentUser.makeClaim(shelter, numSpots, intent);
+        startActivity(intent); //TODO: CRASHES ON THIS LINE
     }
 }

@@ -1,5 +1,7 @@
 package com.example.team38;
 
+import android.content.Intent;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -79,6 +81,14 @@ public class User {
         return password;
     }
 
+    public HomelessShelter getShelter() {
+        return shelter;
+    }
+
+    public int getNumSpots() {
+        return numSpots;
+    }
+
     public void relinquishClaim() {
         if(this.shelter == null && this.numSpots == 0) {
             return;
@@ -87,9 +97,9 @@ public class User {
                 "https://project-42226.firebaseio.com/ShelterList/" + shelter.id);
 
     }
-    public void makeClaim(final HomelessShelter shelter, final int numSpots) {
+    public void makeClaim(final HomelessShelter shelter, final int numSpots, final Intent intent) {
         if(this.shelter != null || this.numSpots != 0) {
-            claimFailed(shelter, numSpots);
+            claimFailed(shelter, numSpots, intent);
         }
         if(Integer.parseInt(shelter.capacity) <= numSpots) {
             final DatabaseReference shelter_db = FirebaseDatabase.getInstance().getReferenceFromUrl(
@@ -117,30 +127,31 @@ public class User {
                     if(cap >= numSpots) {
                         shelter_db.child("capacity").setValue(
                                 Integer.toString(cap - numSpots));
+                        claimSuccessful(shelter, numSpots, intent);
                     }
+                    claimFailed(shelter, numSpots, intent);
 //                    shelter_db.child(Integer.toString(shelter.id))
 //                            .child("capacity").setValue(
 //                                    Integer.toString(Integer.parseInt(shelter.capacity)
 //                                            - numSpots));
-                    claimSuccessful(shelter, numSpots);
 //                    }
                 }
 
                 @Override
                 public void onCancelled(DatabaseError firebaseError) {
-                    claimFailed(shelter, numSpots);
+                    claimFailed(shelter, numSpots, intent);
                 }
             });
         }
     }
 
-    private void claimSuccessful(HomelessShelter shelter, int numSpots) {
-        this.shelter = shelter;
-        this.numSpots = numSpots;
+    private void claimSuccessful(HomelessShelter shelter, int numSpots, Intent intent) {
         //TODO: more (notify user, etc)
+        //intent.putExtra("Success", true);
     }
 
-    private void claimFailed(HomelessShelter shelter, int numSpots) {
+    private void claimFailed(HomelessShelter shelter, int numSpots, Intent intent) {
         //TODO more (notify user, etc)
+        //intent.putExtra("Success", false);
     }
 }
