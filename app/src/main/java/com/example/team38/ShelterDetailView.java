@@ -11,6 +11,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class ShelterDetailView extends AppCompatActivity {
 
     HomelessShelter shelter = null;
@@ -21,11 +27,32 @@ public class ShelterDetailView extends AppCompatActivity {
         setContentView(R.layout.activity_shelter_detail_view);
 
         shelter = getIntent().getParcelableExtra("HomelessShelter");
-        TextView infoDisplay = (TextView) findViewById(R.id.ShelterInfoBox);
+        Log.d("ShelterDetailView", "Shelter ID: " + shelter.id + " " + shelter.name);
+        //HomelessShelter shelter_old = getIntent().getParcelableExtra("HomelessShelter");
+        final DatabaseReference shelter_db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+                "https://project-42226.firebaseio.com/ShelterList/" + shelter.id);
+        shelter_db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                HomelessShelter shelter_ = dataSnapshot.getValue(HomelessShelter.class);
+                Log.d("ShelterDetailView", "Shelter DB ID: " + shelter_.id);
+                setShelter(shelter_);
+                TextView infoDisplay = (TextView) findViewById(R.id.ShelterInfoBox);
+                infoDisplay.setText(shelterToTextString(shelter_));
+            }
 
-        infoDisplay.setText(shelterToTextString(shelter));
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+//        TextView infoDisplay = (TextView) findViewById(R.id.ShelterInfoBox);
+//
+//        infoDisplay.setText(shelterToTextString(shelter));
     }
+
     String shelterToTextString(HomelessShelter shelter) {
+        if(shelter == null) return "None";
         return "Name: \r\r" + shelter.name + "\n\nCapacity: \r\r" + shelter.capacity
                 + "\n\nAllowed Tenants: \r\r" + shelter.allowed + "\n\nAddress: \r\r"
                 + shelter.address + "\n\nLatitude: \r\r" + shelter.latitude + "\nLongitude: \r\r"
@@ -34,15 +61,19 @@ public class ShelterDetailView extends AppCompatActivity {
     }
     public void onMapClicked(View view) {
         Log.d("ShelterDetScreen", "Map Button Pressed");
-        //brings the user to a map with the location of the selected shelter
-        //TODO
+        //TODO: brings the user to a map with the location of the selected shelter
     }
     public void onReserveClicked(View view) {
         Log.d("ShelterDetScreen", "Reserve Button Pressed");
         final EditText resNumBox = (EditText) findViewById(R.id.resNum);
         final int numSpots = Integer.parseInt(resNumBox.getText().toString());
-        Intent intent = new Intent(this, UserView.class);
-        User.currentUser.makeClaim(shelter, numSpots, intent);
-        startActivity(intent); //TODO: CRASHES ON THIS LINE
+        User.makeClaim(shelter, numSpots);
+//        Intent intent = new Intent(this, UserView.class);
+        Intent intent = new Intent(this, ShelterListView.class);
+        startActivity(intent);
+    }
+
+    private void setShelter(HomelessShelter shelter) {
+        this.shelter = shelter;
     }
 }

@@ -1,6 +1,9 @@
 package com.example.team38;
 
+import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +37,10 @@ public class User {
     //the claimed number of beds
     private int numSpots = 0;
 
+    public User() {
+
+    }
+
     public User(String name, String id, String password, AccountType accountType) {
         this.name = name;
         this.id = id;
@@ -41,7 +48,8 @@ public class User {
         this.password = password;
     }
 
-    public User(String name, String id, String password, String accountType) {
+    public User(String name, String id, String password, String accountType,
+                HomelessShelter shelter, int numSpots) {
         this.name = name;
         this.id = id;
         this.password = password;
@@ -58,6 +66,8 @@ public class User {
             default:
                 this.accountType = AccountType.HOMELESS_USER;
         }
+        this.shelter = shelter;
+        this.numSpots = numSpots;
     }
 
     @Override
@@ -89,69 +99,79 @@ public class User {
         return numSpots;
     }
 
-    public void relinquishClaim() {
-        if(this.shelter == null && this.numSpots == 0) {
+    public static void relinquishClaim() {
+        if(currentUser.shelter == null) {
             return;
         }
-        final DatabaseReference shelter_db = FirebaseDatabase.getInstance().getReferenceFromUrl(
-                "https://project-42226.firebaseio.com/ShelterList/" + shelter.id);
+        final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+                "https://project-42226.firebaseio.com");
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Long cap = dataSnapshot.child("ShelterList").child("" + currentUser.shelter.id).child("capacity")
+                        .getValue(Long.class);
+                if(cap == null) {
+                    cap = (long) currentUser.numSpots;
+                } else {
+                    cap += currentUser.numSpots;
+                }
+                db.child("ShelterList").child("" + currentUser.shelter.id).child("capacity").setValue(cap);
+                db.child("UserList").child(currentUser.getId()).child("shelter").setValue(null);
+                db.child("UserList").child(currentUser.getId()).child("numSpots").setValue(0);
+                currentUser.shelter = null;
+                currentUser.numSpots = 0;
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
-    public void makeClaim(final HomelessShelter shelter, final int numSpots, final Intent intent) {
-        if(this.shelter != null || this.numSpots != 0) {
-            claimFailed(shelter, numSpots, intent);
+    public static void makeClaim(final HomelessShelter shelter, final int numSpots) {
+        Log.d("Claim", "Claim started");
+        if(currentUser.shelter != null) {
+            Log.d("ClaimFail", "User has already claimed a spot!");
+            claimFailed();
+            return;
         }
-        if(Integer.parseInt(shelter.capacity) <= numSpots) {
-            final DatabaseReference shelter_db = FirebaseDatabase.getInstance().getReferenceFromUrl(
-                    "https://project-42226.firebaseio.com/ShelterList/" + shelter.id);
-            shelter_db.addListenerForSingleValueEvent(new ValueEventListener() {
+        if(shelter.capacity >= numSpots) {
+            final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+                    "https://project-42226.firebaseio.com");
+            db.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-//                    GenericTypeIndicator<ArrayList<HashMap<String, Object>>> typeIndicator =
-//                            new GenericTypeIndicator<ArrayList<HashMap<String, Object>>>() {};
-//                    Iterator<HashMap<String, Object>> data_iterator =
-//                            dataSnapshot.getValue(typeIndicator).iterator();
-//                    HashMap<String, Object> datum;
-//                    HomelessShelter s = null;
-//                    while (data_iterator.hasNext()) {
-//                        datum = data_iterator.next();
-//                        s = new HomelessShelter(datum);
-//                        if(s.equals(shelter) && Integer.parseInt(s.capacity) >= numSpots) {
-//                            break;
-//                        }
-//                    }
-//                    if(s == null) {
-//                        claimFailed();
-//                    } else {
-                    int cap = Integer.parseInt(dataSnapshot.child("capacity").getValue(String.class));
+                    Log.d("ClaimSuccess", "The claim was successful!");
+                    Long cap = dataSnapshot.child("ShelterList/" + shelter.id)
+                            .child("capacity").getValue(Long.class);
                     if(cap >= numSpots) {
-                        shelter_db.child("capacity").setValue(
-                                Integer.toString(cap - numSpots));
-                        claimSuccessful(shelter, numSpots, intent);
+                        db.child("ShelterList/" + shelter.id).child("capacity").setValue(
+                                cap - numSpots);
+                        db.child("UserList").child(currentUser.getId()).child("shelter").setValue(shelter);
+                        db.child("UserList").child(currentUser.getId()).child("numSpots").setValue(numSpots);
+                        currentUser.shelter = shelter;
+                        currentUser.numSpots = numSpots;
+                        claimSuccessful();
+                    } else {
+                        Log.d("ClaimFail", "Capacity of shelter is inadequate");
+                        claimFailed();
                     }
-                    claimFailed(shelter, numSpots, intent);
-//                    shelter_db.child(Integer.toString(shelter.id))
-//                            .child("capacity").setValue(
-//                                    Integer.toString(Integer.parseInt(shelter.capacity)
-//                                            - numSpots));
-//                    }
+
                 }
 
                 @Override
-                public void onCancelled(DatabaseError firebaseError) {
-                    claimFailed(shelter, numSpots, intent);
+                public void onCancelled(DatabaseError databaseError) {
+
                 }
             });
         }
     }
 
-    private void claimSuccessful(HomelessShelter shelter, int numSpots, Intent intent) {
-        //TODO: more (notify user, etc)
+    private static void claimSuccessful() {
         //intent.putExtra("Success", true);
     }
 
-    private void claimFailed(HomelessShelter shelter, int numSpots, Intent intent) {
-        //TODO more (notify user, etc)
+    private static void claimFailed() {
         //intent.putExtra("Success", false);
     }
 }

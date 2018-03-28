@@ -51,9 +51,13 @@ public class LogIn extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild(uid)) {
                     if(dataSnapshot.child(uid).child("password").getValue(String.class).equals(pass)) {
+                        Log.d("LoginScreen", "Correct login!");
                         setCurrentUser(dataSnapshot.child(uid).child("name").getValue(String.class),
-                            uid, pass, dataSnapshot.child(uid).child("accountType")
-                                    .getValue(String.class));
+                                uid, pass, dataSnapshot.child(uid).child("accountType")
+                                        .getValue(String.class),
+                                dataSnapshot.child(uid).child("shelter")
+                                        .getValue(HomelessShelter.class),
+                                dataSnapshot.child(uid).child("numSpots").getValue(Integer.class));
                         startActivity(intent);
                     } else {
                         final Context context = getApplicationContext();
@@ -76,7 +80,11 @@ public class LogIn extends AppCompatActivity {
         });
     }
 
-    private void setCurrentUser(String name, String uid, String pass, String accountType) {
-        User.currentUser = new User(name, uid, pass, accountType);
+    private void setCurrentUser(String name, String uid, String pass, String accountType,
+                                HomelessShelter shelter, Integer numSpots) {
+        if(numSpots == null) {
+            numSpots = 0;
+        }
+        User.currentUser = new User(name, uid, pass, accountType, shelter, numSpots);
     }
 }
