@@ -5,14 +5,13 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.team38.ShelterDetailView">
+    tools:context="com.example.team38.UserView">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
-        app:layout_constraintBottom_toTopOf="@+id/UserInfoBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -25,50 +24,24 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include
+    <TextView
         android:id="@+id/UserInfoBox"
-        layout="@layout/content_shelter_detail_view"
         android:layout_width="0dp"
         android:layout_height="350dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/resNum"
+        android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
     <Button
-        android:id="@+id/buttonReserve"
+        android:id="@+id/leaveShelterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginStart="20dp"
-        android:onClick="onReserveClicked"
-        android:text="Reserve"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/buttonMap2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginEnd="20dp"
-        android:onClick="onMapClicked"
-        android:text="Map"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="onLeaveShelterButtonClicked"
+        android:text="Leave Shelter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <EditText
-        android:id="@+id/resNum"
-        android:layout_width="0dp"
-        android:layout_height="49dp"
-        android:layout_marginBottom="6dp"
-        android:ems="10"
-        android:inputType="number"
-        android:text="0"
-        app:layout_constraintBottom_toTopOf="@+id/buttonReserve"
-        app:layout_constraintEnd_toEndOf="@+id/buttonReserve"
-        app:layout_constraintStart_toStartOf="@+id/buttonReserve" />
 
 </android.support.constraint.ConstraintLayout>

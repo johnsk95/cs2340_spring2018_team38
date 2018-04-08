@@ -16,7 +16,7 @@ public class HomelessShelter implements Parcelable {
     // Georgia 30318","Temporary, Emergency, Residential Recovery",(404) 367-2465
     int id;
     String name;
-    String capacity;
+    long capacity;
     String allowed;
     double latitude;
     double longitude;
@@ -28,6 +28,9 @@ public class HomelessShelter implements Parcelable {
     // String infoMatcher = "([0-9]+?),(.*?),(.*?),(.*?),(.*?),(.*?),\"(.*?)\",\"(.*?)\",(.*)";
     // Pattern infoPattern = Pattern.compile(infoMatcher);
 
+    HomelessShelter() {
+        //throw new Exception();
+    }
     HomelessShelter(String infostring) throws CouldNotParseInfoException {
         String[] info_parts = infostring.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
 
@@ -44,7 +47,7 @@ public class HomelessShelter implements Parcelable {
 
         id = Integer.parseInt(info_parts[0]);
         name = info_parts[1];
-        capacity = info_parts[2];
+        capacity = Long.parseLong(info_parts[2]);
         allowed = info_parts[3];
         latitude = Double.parseDouble(info_parts[4]);
         longitude = Double.parseDouble(info_parts[5]);
@@ -58,7 +61,13 @@ public class HomelessShelter implements Parcelable {
 
         id = in.readInt();
         name = in.readString();
-        capacity = in.readString();
+//        String c = in.readString();
+//        if(c == null) {
+//            capacity = 0;
+//        } else {
+//            capacity = Long.parseLong(c);
+//        }
+        capacity = in.readLong();
         allowed = in.readString();
         latitude = in.readDouble();
         longitude = in.readDouble();
@@ -69,8 +78,14 @@ public class HomelessShelter implements Parcelable {
 
     public HomelessShelter(HashMap<String, Object> shelter_dictionary) {
 
+        id = (int) ((long) shelter_dictionary.get("id"));
         name = (String) shelter_dictionary.get("name");
-        capacity = (String) shelter_dictionary.get("capacity");
+        Object c = shelter_dictionary.get("capacity");
+        if(c instanceof String) {
+            capacity = Long.parseLong((String) c);
+        } else {
+            capacity = (Long) shelter_dictionary.get("capacity");
+        }
         allowed = (String) shelter_dictionary.get("allowed");
         latitude = (Double) shelter_dictionary.get("latitude");
         longitude = (Double) shelter_dictionary.get("longitude");
@@ -84,7 +99,7 @@ public class HomelessShelter implements Parcelable {
 
         dest.writeInt(id);
         dest.writeString(name);
-        dest.writeString(capacity);
+        dest.writeLong(capacity);
         dest.writeString(allowed);
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);
@@ -112,6 +127,17 @@ public class HomelessShelter implements Parcelable {
 
     public String toString(){
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof HomelessShelter) {
+            HomelessShelter s = (HomelessShelter) o;
+            return id == s.id && name.equals(s.name) && latitude == s.latitude
+                    && longitude == s.longitude && address == s.address && shelterType
+                    == s.shelterType && phoneNumber == s.phoneNumber;
+        }
+        return false;
     }
 }
 

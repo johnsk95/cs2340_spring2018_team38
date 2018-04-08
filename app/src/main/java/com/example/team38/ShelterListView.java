@@ -79,6 +79,12 @@ public class ShelterListView extends AppCompatActivity {
         }
         refreshShelterListView();
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        refreshShelterListView();
+    }
     public void refreshShelterListView() {
         ArrayAdapter<HomelessShelter> arrayAdapter = new ArrayAdapter<HomelessShelter>(this,
                 android.R.layout.simple_list_item_1, shelters);
@@ -113,6 +119,11 @@ public class ShelterListView extends AppCompatActivity {
     public void onMapButtonClicked(View view) {
         Intent intent = new Intent(this, MapsActivity.class);
         intent.putParcelableArrayListExtra("SheltersToDisplay", shelters);
+        startActivity(intent);
+    }
+    public void onUserInfoClicked(View view) {
+        Log.d("WelcomeScreen", "User Info button pressed");
+        Intent intent = new Intent(this, UserView.class);
         startActivity(intent);
     }
 }
