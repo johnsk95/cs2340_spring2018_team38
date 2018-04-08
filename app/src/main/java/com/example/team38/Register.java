@@ -41,7 +41,7 @@ public class Register extends AppCompatActivity {
         accountType = findViewById(R.id.AccountSpinner);
 
         //puts the possible user types into the spinner
-        ArrayAdapter<String> adapter = (ArrayAdapter<String>) new ArrayAdapter(this,
+        @SuppressWarnings("unchecked") ArrayAdapter<String> adapter = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item, AccountType.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         accountType.setAdapter(adapter);
@@ -50,13 +50,13 @@ public class Register extends AppCompatActivity {
     Registers a new user in the map if the user id is not already in use
      * @param view
      */
-    public void onRegisterClicked(View view) {
+    public void onRegisterClicked(@SuppressWarnings("unused") View view) {
         Log.d("RegScreen", "Register Button Pressed");
         //registers as a new user if the id is not already in use,
         //shows an error message if the id is in use
-        final String uid = idBox.getText().toString();
-        final String pass = passBox.getText().toString();
-        final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+        @SuppressWarnings("ChainedMethodCall") final String uid = idBox.getText().toString();
+        @SuppressWarnings("ChainedMethodCall") final String pass = passBox.getText().toString();
+        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
                 "https://project-42226.firebaseio.com/UserList");
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -68,10 +68,12 @@ public class Register extends AppCompatActivity {
                             "registration failed: userID is already in use", duration);
                     t.show();
                 } else {
-                    User user = new User(nameBox.getText().toString(), uid, pass,
+                    @SuppressWarnings("ChainedMethodCall") User user = new User(nameBox.getText().toString(), uid, pass,
                             (AccountType) accountType.getSelectedItem());
+                    //noinspection ChainedMethodCall
                     Log.d("newUser", "NEW USER: " + user.getName() + " " + user.getId()
-                            + " " + user.getPassword() + " " + user.getAccountType().toString());
+                            + " " + user.getPassword() + " " + user.getAccountTypeAsString());
+                    //noinspection ChainedMethodCall
                     db.child(uid).setValue(user);
                     finish();
                 }
@@ -86,7 +88,7 @@ public class Register extends AppCompatActivity {
     Goes back to the main screen is cancel is pressed
      * @param view
      */
-    public void onCancelClicked(View view) {
+    public void onCancelClicked(@SuppressWarnings("unused") View view) {
         finish();
     }
 

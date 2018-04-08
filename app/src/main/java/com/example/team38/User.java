@@ -14,7 +14,7 @@ import com.google.firebase.database.ValueEventListener;
  * Information Holder - hold the information for a user of the app
  */
 
-public class User {
+class User {
     static User currentUser;
 
     //the name of the user
@@ -82,6 +82,10 @@ public class User {
         return  accountType;
     }
 
+    public String getAccountTypeAsString() {
+        return accountType.toString();
+    }
+
     public String getPassword() {
         return password;
     }
@@ -99,21 +103,24 @@ public class User {
         if(currentUser.shelter == null) {
             return;
         }
-        final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
                 "https://project-42226.firebaseio.com");
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Long cap = dataSnapshot.child("ShelterList").child("" + currentUser.shelter.id)
+                @SuppressWarnings("ChainedMethodCall") Long cap = dataSnapshot.child("ShelterList").child("" + currentUser.shelter.id)
                         .child("capacity").getValue(Long.class);
                 if(cap == null) {
                     cap = (long) currentUser.numSpots;
                 } else {
                     cap += currentUser.numSpots;
                 }
+                //noinspection ChainedMethodCall,ChainedMethodCall,ChainedMethodCall
                 db.child("ShelterList").child("" + currentUser.shelter.id).child("capacity")
                         .setValue(cap);
+                //noinspection ChainedMethodCall,ChainedMethodCall,ChainedMethodCall
                 db.child("UserList").child(currentUser.getId()).child("shelter").setValue(null);
+                //noinspection ChainedMethodCall,ChainedMethodCall,ChainedMethodCall
                 db.child("UserList").child(currentUser.getId()).child("numSpots").setValue(0);
                 currentUser.shelter = null;
                 currentUser.numSpots = 0;
@@ -132,19 +139,22 @@ public class User {
             return;
         }
         if(shelter.capacity >= numSpots) {
-            final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+            @SuppressWarnings("ChainedMethodCall") final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
                     "https://project-42226.firebaseio.com");
             db.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Log.d("ClaimSuccess", "The claim was successful!");
-                    Long cap = dataSnapshot.child("ShelterList/" + shelter.id)
+                    @SuppressWarnings("ChainedMethodCall") Long cap = dataSnapshot.child("ShelterList/" + shelter.id)
                             .child("capacity").getValue(Long.class);
-                    if(cap != null && cap >= numSpots) {
+                    if((cap != null) && (cap >= numSpots)) {
+                        //noinspection ChainedMethodCall,ChainedMethodCall
                         db.child("ShelterList/" + shelter.id).child("capacity").setValue(
                                 cap - numSpots);
+                        //noinspection ChainedMethodCall,ChainedMethodCall,ChainedMethodCall
                         db.child("UserList").child(currentUser.getId()).child("shelter")
                                 .setValue(shelter);
+                        //noinspection ChainedMethodCall,ChainedMethodCall,ChainedMethodCall
                         db.child("UserList").child(currentUser.getId()).child("numSpots")
                                 .setValue(numSpots);
                         currentUser.shelter = shelter;

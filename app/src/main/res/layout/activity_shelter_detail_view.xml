@@ -46,7 +46,8 @@
         android:onClick="onReserveClicked"
         android:text="Reserve"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/buttonMap2"
@@ -57,7 +58,8 @@
         android:onClick="onMapClicked"
         android:text="Map"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/resNum"
@@ -69,7 +71,8 @@
         android:text="0"
         app:layout_constraintBottom_toTopOf="@+id/buttonReserve"
         app:layout_constraintEnd_toEndOf="@+id/buttonReserve"
-        app:layout_constraintStart_toStartOf="@+id/buttonReserve" />
+        app:layout_constraintStart_toStartOf="@+id/buttonReserve"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/numSpotsLabel"
@@ -79,6 +82,7 @@
         android:layout_marginBottom="8dp"
         android:text="# Spots"
         app:layout_constraintBottom_toTopOf="@+id/resNum"
-        app:layout_constraintStart_toStartOf="@+id/resNum" />
+        app:layout_constraintStart_toStartOf="@+id/resNum"
+        tools:ignore="HardcodedText" />
 
 </android.support.constraint.ConstraintLayout>

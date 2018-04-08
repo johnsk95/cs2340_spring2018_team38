@@ -15,7 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UserView extends AppCompatActivity {
 
-    private final boolean reservationSuccess = true;
+    // --Commented out by Inspection (4/8/18 6:09 PM):private final boolean reservationSuccess = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class UserView extends AppCompatActivity {
 
         //HomelessShelter shelter = getIntent().getParcelableExtra("HomelessShelter");
         //reservationSuccess = getIntent().getBooleanExtra("Success", false);
-        final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
                 "https://project-42226.firebaseio.com/UserList/" + User.currentUser.getId());
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -46,7 +46,7 @@ public class UserView extends AppCompatActivity {
         super.onResume();
 //        TextView infoDisplay = (TextView) findViewById(R.id.UserInfoBox);
 //        infoDisplay.setText(userToTextString(User.currentUser));
-        final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
                 "https://project-42226.firebaseio.com/UserList/" + User.currentUser.getId());
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -65,7 +65,7 @@ public class UserView extends AppCompatActivity {
         super.onRestart();
 //        TextView infoDisplay = (TextView) findViewById(R.id.UserInfoBox);
 //        infoDisplay.setText(userToTextString(User.currentUser));
-        final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
                 "https://project-42226.firebaseio.com/UserList/" + User.currentUser.getId());
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -107,7 +107,7 @@ public class UserView extends AppCompatActivity {
         return shelter.name;
     }
 
-    public void onLeaveShelterButtonClicked(View view) {
+    public void onLeaveShelterButtonClicked(@SuppressWarnings("unused") View view) {
         Log.d("UserViewScreen", "Leave Shelter Button Pressed");
         User.relinquishClaim();
         Intent intent = new Intent(this, ShelterListView.class);

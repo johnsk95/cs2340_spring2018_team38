@@ -21,7 +21,8 @@
         app:layout_constraintBottom_toTopOf="@+id/genderButtonGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <!--
     <RadioGroup
@@ -47,14 +48,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Male" />
+            android:text="Male"
+            tools:ignore="HardcodedText" />
 
         <RadioButton
             android:id="@+id/genderWomen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Female" />
+            android:text="Female"
+            tools:ignore="HardcodedText" />
 
         <RadioButton
             android:id="@+id/genderAny"
@@ -62,7 +65,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="Any" />
+            android:text="Any"
+            tools:ignore="HardcodedText" />
     </RadioGroup>
 
     <TextView
@@ -76,7 +80,8 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/ageRangeButtonGroup"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
     <RadioGroup
         android:id="@+id/ageRangeButtonGroup"
@@ -94,21 +99,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Families with newborns" />
+            android:text="Families with newborns"
+            tools:ignore="HardcodedText" />
 
         <RadioButton
             android:id="@+id/ageRangeChildren"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Children" />
+            android:text="Children"
+            tools:ignore="HardcodedText" />
 
         <RadioButton
             android:id="@+id/ageRangeYoungAdults"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Young Adults" />
+            android:text="Young Adults"
+            tools:ignore="HardcodedText" />
 
         <RadioButton
             android:id="@+id/ageRangeAnyone"
@@ -116,7 +124,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="Anyone" />
+            android:text="Anyone"
+            tools:ignore="HardcodedText" />
     </RadioGroup>
 
     <android.support.design.widget.TextInputLayout
@@ -137,7 +146,8 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Shelter Name"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            tools:ignore="HardcodedText" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
@@ -151,5 +161,6 @@
         android:text="Search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 </android.support.constraint.ConstraintLayout>

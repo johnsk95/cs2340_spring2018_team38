@@ -28,27 +28,28 @@ public class LogIn extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
-    public void onLoginClicked(View view) {
+    public void onLoginClicked(@SuppressWarnings("unused") View view) {
         Log.d("LoginScreen", "Login Button Pressed");
         final Intent intent = new Intent(this, ShelterListView.class);
         final EditText nameBox = findViewById(R.id.ID);
         final EditText pwBox = findViewById(R.id.PW);
         //view username and password
-        final String uid = nameBox.getText().toString();
-        final String pass = pwBox.getText().toString();
+        @SuppressWarnings("ChainedMethodCall") final String uid = nameBox.getText().toString();
+        @SuppressWarnings("ChainedMethodCall") final String pass = pwBox.getText().toString();
         Log.d("user", uid);
         Log.d("pw", pass); //Why are we logging passwords?
         //checks if the user id exists and if the password is correct
         //if not a warning message is displayed
-        final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
                 "https://project-42226.firebaseio.com/UserList");
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild(uid)) {
-                    String pwd = dataSnapshot.child(uid).child("password").getValue(String.class);
+                    @SuppressWarnings("ChainedMethodCall") String pwd = dataSnapshot.child(uid).child("password").getValue(String.class);
                     if(pass.equals(pwd)) {
                         Log.d("LoginScreen", "Correct login!");
+                        //noinspection ChainedMethodCall,ChainedMethodCall,ChainedMethodCall,ChainedMethodCall,ChainedMethodCall,ChainedMethodCall,ChainedMethodCall,ChainedMethodCall
                         setCurrentUser(dataSnapshot.child(uid).child("name").getValue(String.class),
                                 uid, pass, dataSnapshot.child(uid).child("accountType")
                                         .getValue(String.class),

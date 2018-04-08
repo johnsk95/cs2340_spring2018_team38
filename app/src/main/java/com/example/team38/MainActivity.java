@@ -20,13 +20,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void onLoginButtonClicked(View view) {
+    public void onLoginButtonClicked(@SuppressWarnings("unused") View view) {
         Log.d("WelcomeScreen", "Button Pressed");
         Intent intent = new Intent(this, LogIn.class);
         startActivity(intent);
     }
 
-    public void onRegButtonClicked(View view) {
+    public void onRegButtonClicked(@SuppressWarnings("unused") View view) {
         Log.d("WelcomeScreen", "REG button pressed");
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);

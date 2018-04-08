@@ -113,6 +113,7 @@ public class HomelessShelter implements Parcelable {
         return 0;
     }
 
+    @SuppressWarnings("unused")
     public static final Creator<HomelessShelter> CREATOR = new Creator<HomelessShelter>() {
         @Override
         public HomelessShelter createFromParcel(Parcel in) {

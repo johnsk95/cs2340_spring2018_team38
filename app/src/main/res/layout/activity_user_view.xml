@@ -31,7 +31,8 @@
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/leaveShelterButton"
@@ -42,6 +43,7 @@
         android:onClick="onLeaveShelterButtonClicked"
         android:text="Leave Shelter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="HardcodedText" />
 
 </android.support.constraint.ConstraintLayout>

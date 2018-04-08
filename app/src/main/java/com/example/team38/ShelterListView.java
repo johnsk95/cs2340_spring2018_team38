@@ -43,12 +43,14 @@ public class ShelterListView extends AppCompatActivity {
 
         // To allow reuse of this same activity for the search bar, I essentially
         // add a lambda expression as an argument
+        //noinspection ChainedMethodCall
         shelters = getIntent().getParcelableArrayListExtra("SheltersToDisplay");
         if (shelters == null) {
             // NOTE: THIS CODE IS HEAVILY DUPLICATED IN SHELTER-SEARCH
             final DatabaseReference shelter_db;
 
             shelters = new ArrayList<>();
+            //noinspection ChainedMethodCall
             shelter_db = FirebaseDatabase.getInstance().getReferenceFromUrl(
                     "https://project-42226.firebaseio.com/ShelterList");
             shelter_db.addValueEventListener(new ValueEventListener() {
@@ -58,6 +60,7 @@ public class ShelterListView extends AppCompatActivity {
                             new GenericTypeIndicator<ArrayList<HashMap<String, Object>>>() {};
                     Iterator<HashMap<String, Object>> data_iterator;
                     try {
+                        //noinspection ChainedMethodCall
                         data_iterator =
                                 dataSnapshot.getValue(typeIndicator).iterator();
                     } catch(NullPointerException e) {
@@ -113,7 +116,7 @@ public class ShelterListView extends AppCompatActivity {
         });
     }
 
-    public void onLogoutButtonClicked(View view) {
+    public void onLogoutButtonClicked(@SuppressWarnings("unused") View view) {
         Log.d("ShelterListView", "Button Pressed");
         Intent intent = new Intent(this, MainActivity.class);
         // prevents screen from going back to the mainScreen when pressing back button after logout
@@ -121,17 +124,17 @@ public class ShelterListView extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onSearchViewButtonClicked(View view) {
+    public void onSearchViewButtonClicked(@SuppressWarnings("unused") View view) {
         Intent intent = new Intent(this, ShelterSearch.class);
         startActivity(intent);
     }
 
-    public void onMapButtonClicked(View view) {
+    public void onMapButtonClicked(@SuppressWarnings("unused") View view) {
         Intent intent = new Intent(this, MapsActivity.class);
         intent.putParcelableArrayListExtra("SheltersToDisplay", shelters);
         startActivity(intent);
     }
-    public void onUserInfoClicked(View view) {
+    public void onUserInfoClicked(@SuppressWarnings("unused") View view) {
         Log.d("WelcomeScreen", "User Info button pressed");
         Intent intent = new Intent(this, UserView.class);
         startActivity(intent);

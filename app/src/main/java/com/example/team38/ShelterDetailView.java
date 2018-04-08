@@ -23,10 +23,11 @@ public class ShelterDetailView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelter_detail_view);
 
+        //noinspection ChainedMethodCall
         shelter = getIntent().getParcelableExtra("HomelessShelter");
         Log.d("ShelterDetailView", "Shelter ID: " + shelter.id + " " + shelter.name);
         //HomelessShelter shelter_old = getIntent().getParcelableExtra("HomelessShelter");
-        final DatabaseReference shelter_db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+        @SuppressWarnings("ChainedMethodCall") final DatabaseReference shelter_db = FirebaseDatabase.getInstance().getReferenceFromUrl(
                 "https://project-42226.firebaseio.com/ShelterList/" + shelter.id);
         shelter_db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -57,14 +58,14 @@ public class ShelterDetailView extends AppCompatActivity {
                 + shelter.longitude + "\n\nServices: \r\r" + shelter.shelterType +
                 "\n\nPhone Number: \r\r" + shelter.phoneNumber;
     }
-    public void onMapClicked(View view) {
+    public void onMapClicked(@SuppressWarnings("unused") View view) {
         Log.d("ShelterDetScreen", "Map Button Pressed");
         //TODO: brings the user to a map with the location of the selected shelter
     }
-    public void onReserveClicked(View view) {
+    public void onReserveClicked(@SuppressWarnings("unused") View view) {
         Log.d("ShelterDetScreen", "Reserve Button Pressed");
         final EditText resNumBox = findViewById(R.id.resNum);
-        final int numSpots = Integer.parseInt(resNumBox.getText().toString());
+        @SuppressWarnings("ChainedMethodCall") final int numSpots = Integer.parseInt(resNumBox.getText().toString());
         User.makeClaim(shelter, numSpots);
 //        Intent intent = new Intent(this, UserView.class);
         Intent intent = new Intent(this, ShelterListView.class);

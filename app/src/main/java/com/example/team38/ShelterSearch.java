@@ -47,6 +47,7 @@ public class ShelterSearch extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //noinspection ChainedMethodCall,ChainedMethodCall
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -64,11 +65,12 @@ public class ShelterSearch extends AppCompatActivity {
 
     }
 
-    public void onSearchButtonClicked(View view) {
+    public void onSearchButtonClicked(@SuppressWarnings("unused") View view) {
         // NOTE; THIS CODE IS HEAVILY DUPLICATED IN SHELTERVIEWLIST.JAVA
         final DatabaseReference shelter_db;
 
         shelters = new ArrayList<>();
+        //noinspection ChainedMethodCall
         shelter_db = FirebaseDatabase.getInstance().getReferenceFromUrl(
                 "https://project-42226.firebaseio.com/ShelterList");
         shelter_db.addValueEventListener(new ValueEventListener() {
@@ -78,6 +80,7 @@ public class ShelterSearch extends AppCompatActivity {
                         new GenericTypeIndicator<ArrayList<HashMap<String, Object>>>() {};
                 Iterator<HashMap<String, Object>> data_iterator;
                 try {
+                    //noinspection ChainedMethodCall
                     data_iterator =
                         dataSnapshot.getValue(typeIndicator).iterator();
                 } catch(NullPointerException e) {
@@ -114,25 +117,31 @@ public class ShelterSearch extends AppCompatActivity {
 
     private boolean includeInSearch(HomelessShelter s) {
 
+        //noinspection ChainedMethodCall,ChainedMethodCall,ChainedMethodCall
         if (!s.name.toLowerCase().contains(nameFilter.getText().toString().toLowerCase())) {
             return false;
         }
+        //noinspection ChainedMethodCall,ChainedMethodCall
         if (menButton.isChecked() && !s.allowed.toLowerCase().replace("women",
                 "").contains("men")) {
             return false;
         }
+        //noinspection ChainedMethodCall
         if (womenButton.isChecked() && !s.allowed.toLowerCase().contains("women")) {
             return false;
         }
 
+        //noinspection ChainedMethodCall
         if (familyWithNewbornButton.isChecked() &&
                 !s.allowed.toLowerCase().contains("newborn")) {
             return false;
         }
+        //noinspection ChainedMethodCall
         if (childrenButton.isChecked() &&
                 !s.allowed.toLowerCase().contains("children")) {
             return false;
         }
+        //noinspection ChainedMethodCall
         return !(youngAdultButton.isChecked() &&
                 !s.allowed.toLowerCase().contains("young adult"));
     }
