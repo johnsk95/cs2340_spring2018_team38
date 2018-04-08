@@ -4,11 +4,13 @@ import com.example.team38.utils.ShelterUtils;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.firebase.client.FirebaseError;
@@ -86,7 +88,7 @@ public class ShelterListView extends AppCompatActivity {
         refreshShelterListView();
     }
     public void refreshShelterListView() {
-        ArrayAdapter<HomelessShelter> arrayAdapter = new ArrayAdapter<HomelessShelter>(this,
+        ListAdapter arrayAdapter = new ArrayAdapter<HomelessShelter>(this,
                 android.R.layout.simple_list_item_1, shelters);
         shelterListView.setAdapter(arrayAdapter);
         shelterListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -95,7 +97,7 @@ public class ShelterListView extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapter, View v, int position,
                                     long arg3)
             {
-                HomelessShelter clicked = (HomelessShelter) adapter.getItemAtPosition(position);
+                Parcelable clicked = (HomelessShelter) adapter.getItemAtPosition(position);
                 Intent intent = new Intent(v.getContext(), ShelterDetailView.class);
                 intent.putExtra("HomelessShelter", clicked);
                 startActivity(intent);

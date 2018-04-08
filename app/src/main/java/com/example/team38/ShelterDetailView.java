@@ -51,7 +51,7 @@ public class ShelterDetailView extends AppCompatActivity {
 //        infoDisplay.setText(shelterToTextString(shelter));
     }
 
-    String shelterToTextString(HomelessShelter shelter) {
+    CharSequence shelterToTextString(HomelessShelter shelter) {
         if(shelter == null) return "None";
         return "Name: \r\r" + shelter.name + "\n\nCapacity: \r\r" + shelter.capacity
                 + "\n\nAllowed Tenants: \r\r" + shelter.allowed + "\n\nAddress: \r\r"

@@ -71,4 +71,14 @@
         app:layout_constraintEnd_toEndOf="@+id/buttonReserve"
         app:layout_constraintStart_toStartOf="@+id/buttonReserve" />
 
+    <TextView
+        android:id="@+id/numSpotsLabel"
+        android:labelFor="@+id/resNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="# Spots"
+        app:layout_constraintBottom_toTopOf="@+id/resNum"
+        app:layout_constraintStart_toStartOf="@+id/resNum" />
+
 </android.support.constraint.ConstraintLayout>

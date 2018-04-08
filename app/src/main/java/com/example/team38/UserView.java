@@ -85,7 +85,7 @@ public class UserView extends AppCompatActivity {
             }
         });
     }
-    String userToTextString(User user) {
+    CharSequence userToTextString(User user) {
         return "Name: \r\r" + user.getName()
                 + "\n\nID: \r\r" + user.getId()
                 + "\n\nAccount Type: \r\r" + user.getAccountType()

@@ -20,6 +20,7 @@
 
     <TextView
         android:id="@+id/name"
+        android:labelFor="@+id/regname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -35,6 +36,7 @@
 
     <TextView
         android:id="@+id/userID"
+        android:labelFor="@+id/regID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -64,6 +66,7 @@
 
     <TextView
         android:id="@+id/password"
+        android:labelFor="@+id/regPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.location.LocationServices;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Nathaniel on 3/9/2018.
@@ -34,12 +35,15 @@ import java.util.ArrayList;
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap shelterMap;
-    private ArrayList<HomelessShelter> shelters;
+    private List<HomelessShelter> shelters;
     private Location lastLocation;
     private Marker marker;
     private FusedLocationProviderClient client;
     private SupportMapFragment frag;
     private LocationRequest request;
+
+    private static final int unknownVar1 = 120000;
+    private static final int unknownVar2 = 11;
 
 
 
@@ -67,8 +71,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         shelterMap = googleMap;
         // location request
         request = new LocationRequest();
-        request.setInterval(120000); // two minutes (can be changed for higher accuracy if needed)
-        request.setFastestInterval(120000);
+        request.setInterval(unknownVar1); // two minutes (can be changed for higher accuracy if needed)
+        request.setFastestInterval(unknownVar1);
         // can use high accuracy if we need more precise location but uses more power
         request.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
@@ -165,7 +169,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //marker = shelterMap.addMarker(markerOptions);
 
                 //move map camera
-                shelterMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
+                shelterMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, unknownVar2));
             }
         }
 

@@ -7,6 +7,7 @@
 
     <TextView
         android:id="@+id/textView2"
+        android:labelFor="@id/ID"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
@@ -41,6 +42,7 @@
 
     <TextView
         android:id="@+id/textView3"
+        android:labelFor="@+id/PW"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
