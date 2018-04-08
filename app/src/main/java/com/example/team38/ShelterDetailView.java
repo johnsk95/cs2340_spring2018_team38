@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ShelterDetailView extends AppCompatActivity {
 
-    HomelessShelter shelter = null;
+    private HomelessShelter shelter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class ShelterDetailView extends AppCompatActivity {
 //        infoDisplay.setText(shelterToTextString(shelter));
     }
 
-    CharSequence shelterToTextString(HomelessShelter shelter) {
+    private CharSequence shelterToTextString(HomelessShelter shelter) {
         if(shelter == null) {
             return "None";
         }

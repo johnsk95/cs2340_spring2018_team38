@@ -42,7 +42,7 @@ public class Register extends AppCompatActivity {
         accountType = (Spinner) findViewById(R.id.AccountSpinner);
 
         //puts the possible user types into the spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, AccountType.values());
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, AccountType.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         accountType.setAdapter(adapter);
     }

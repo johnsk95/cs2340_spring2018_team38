@@ -1,8 +1,6 @@
 package com.example.team38;
 
-import com.example.team38.utils.ShelterUtils;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +11,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.firebase.client.FirebaseError;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.DatabaseError;
@@ -21,10 +18,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.GenericTypeIndicator;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,8 +31,8 @@ import java.util.Iterator;
 
 public class ShelterListView extends AppCompatActivity {
 
-    ListView shelterListView;
-    ArrayList<HomelessShelter> shelters;
+    private ListView shelterListView;
+    private ArrayList<HomelessShelter> shelters;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +80,7 @@ public class ShelterListView extends AppCompatActivity {
         super.onRestart();
         refreshShelterListView();
     }
-    public void refreshShelterListView() {
+    private void refreshShelterListView() {
         ListAdapter arrayAdapter = new ArrayAdapter<HomelessShelter>(this,
                 android.R.layout.simple_list_item_1, shelters);
         shelterListView.setAdapter(arrayAdapter);

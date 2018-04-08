@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UserView extends AppCompatActivity {
 
-    boolean reservationSuccess = true;
+    private final boolean reservationSuccess = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,7 @@ public class UserView extends AppCompatActivity {
             }
         });
     }
-    CharSequence userToTextString(User user) {
+    private CharSequence userToTextString(User user) {
         return "Name: \r\r" + user.getName()
                 + "\n\nID: \r\r" + user.getId()
                 + "\n\nAccount Type: \r\r" + user.getAccountType()
@@ -94,12 +94,14 @@ public class UserView extends AppCompatActivity {
                 /*+ "\n\nReservation: \r\r" + rsucc()*/;
     }
 
-    private String rsucc() {
-        if(reservationSuccess) {
-            return "Successful";
-        }
-        return "Unsuccessful";
-    }
+// --Commented out by Inspection START (4/8/18 5:08 PM):
+//    private String rsucc() {
+//        if(reservationSuccess) {
+//            return "Successful";
+//        }
+//        return "Unsuccessful";
+//    }
+// --Commented out by Inspection STOP (4/8/18 5:08 PM)
 
     private String shelterName(HomelessShelter shelter) {
         if(shelter == null) {

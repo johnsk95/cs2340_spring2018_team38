@@ -28,15 +28,15 @@ import java.util.Iterator;
 
 public class ShelterSearch extends AppCompatActivity {
 
-    TextView nameFilter;
-    Button searchButton;
-    RadioGroup genderRadioGroup;
-    ArrayList<HomelessShelter> shelters;
-    RadioButton menButton;
-    RadioButton womenButton;
-    RadioButton familyWithNewbornButton;
-    RadioButton childrenButton;
-    RadioButton youngAdultButton;
+    private TextView nameFilter;
+    // --Commented out by Inspection (4/8/18 5:05 PM):private Button searchButton;
+    // --Commented out by Inspection (4/8/18 5:05 PM):private RadioGroup genderRadioGroup;
+    private ArrayList<HomelessShelter> shelters;
+    private RadioButton menButton;
+    private RadioButton womenButton;
+    private RadioButton familyWithNewbornButton;
+    private RadioButton childrenButton;
+    private RadioButton youngAdultButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +54,8 @@ public class ShelterSearch extends AppCompatActivity {
             }
         });
 
-        searchButton = (Button) findViewById(R.id.searchbutton);
-        genderRadioGroup = (RadioGroup) findViewById(R.id.genderButtonGroup);
+//        searchButton = (Button) findViewById(R.id.searchbutton);
+//        genderRadioGroup = (RadioGroup) findViewById(R.id.genderButtonGroup);
         nameFilter = (TextView) findViewById(R.id.shelterSearchNameFilterID);
 
         menButton = (RadioButton) findViewById(R.id.genderMen);
@@ -99,7 +99,7 @@ public class ShelterSearch extends AppCompatActivity {
 
     }
 
-    public boolean includeInSearch(HomelessShelter s) {
+    private boolean includeInSearch(HomelessShelter s) {
 
         if (!s.name.toLowerCase().contains(nameFilter.getText().toString().toLowerCase())) {
             return false;
@@ -122,15 +122,11 @@ public class ShelterSearch extends AppCompatActivity {
                 !s.allowed.toLowerCase().contains("children")) {
             return false;
         }
-        if (youngAdultButton.isChecked() &&
-                !s.allowed.toLowerCase().contains("young adult")) {
-            return false;
-        }
-
-        return true;
+        return !(youngAdultButton.isChecked() &&
+                !s.allowed.toLowerCase().contains("young adult"));
     }
 
-    public void transferToFilteredList() {
+    private void transferToFilteredList() {
         Intent intent = new Intent(this, ShelterListView.class);
         intent.putParcelableArrayListExtra("SheltersToDisplay", shelters);
         startActivity(intent);

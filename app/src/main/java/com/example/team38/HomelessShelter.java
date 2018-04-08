@@ -57,7 +57,7 @@ public class HomelessShelter implements Parcelable {
 
     }
 
-    protected HomelessShelter(Parcel in) {
+    HomelessShelter(Parcel in) {
 
         id = in.readInt();
         name = in.readString();
@@ -113,17 +113,19 @@ public class HomelessShelter implements Parcelable {
         return 0;
     }
 
-    public static final Creator<HomelessShelter> CREATOR = new Creator<HomelessShelter>() {
-        @Override
-        public HomelessShelter createFromParcel(Parcel in) {
-            return new HomelessShelter(in);
-        }
-
-        @Override
-        public HomelessShelter[] newArray(int size) {
-            return new HomelessShelter[size];
-        }
-    };
+// --Commented out by Inspection START (4/8/18 4:58 PM):
+//    public static final Creator<HomelessShelter> CREATOR = new Creator<HomelessShelter>() {
+//        @Override
+//        public HomelessShelter createFromParcel(Parcel in) {
+//            return new HomelessShelter(in);
+//        }
+//
+//        @Override
+//        public HomelessShelter[] newArray(int size) {
+//            return new HomelessShelter[size];
+//        }
+//    };
+// --Commented out by Inspection STOP (4/8/18 4:58 PM)
 
     public String toString(){
         return name;

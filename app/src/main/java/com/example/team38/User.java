@@ -134,7 +134,6 @@ public class User {
         Log.d("Claim", "Claim started");
         if(currentUser.shelter != null) {
             Log.d("ClaimFail", "User has already claimed a spot!");
-            claimFailed();
             return;
         }
         if(shelter.capacity >= numSpots) {
@@ -153,10 +152,8 @@ public class User {
                         db.child("UserList").child(currentUser.getId()).child("numSpots").setValue(numSpots);
                         currentUser.shelter = shelter;
                         currentUser.numSpots = numSpots;
-                        claimSuccessful();
                     } else {
                         Log.d("ClaimFail", "Capacity of shelter is inadequate");
-                        claimFailed();
                     }
 
                 }
@@ -169,11 +166,4 @@ public class User {
         }
     }
 
-    private static void claimSuccessful() {
-        //intent.putExtra("Success", true);
-    }
-
-    private static void claimFailed() {
-        //intent.putExtra("Success", false);
-    }
 }
