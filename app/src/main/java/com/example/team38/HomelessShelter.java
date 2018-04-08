@@ -39,8 +39,8 @@ public class HomelessShelter implements Parcelable {
         }
 
         for(int i = 0; i < info_parts.length; ++i) {
-            if (info_parts[i].length() > 0 && info_parts[i].charAt(0) == '\"' &&
-                    info_parts[i].charAt(info_parts[i].length() - 1) == '\"') {
+            if (!info_parts[i].isEmpty() && (info_parts[i].charAt(0) == '\"') &&
+                    (info_parts[i].charAt(info_parts[i].length() - 1) == '\"')) {
                 info_parts[i] = info_parts[i].substring(1, info_parts[i].length() - 1);
             }
         }
@@ -133,16 +133,16 @@ public class HomelessShelter implements Parcelable {
     public boolean equals(Object o) {
         if(o instanceof HomelessShelter) {
             HomelessShelter s = (HomelessShelter) o;
-            return id == s.id && name.equals(s.name) && latitude == s.latitude
-                    && longitude == s.longitude && address == s.address && shelterType
-                    == s.shelterType && phoneNumber == s.phoneNumber;
+            return (id == s.id) && name.equals(s.name) && (latitude == s.latitude)
+                    && (longitude == s.longitude) && (address == s.address) && (shelterType
+                    == s.shelterType) && (phoneNumber == s.phoneNumber);
         }
         return false;
     }
-}
-
-class CouldNotParseInfoException extends Exception {
-    public CouldNotParseInfoException(String err) {
-        super(err);
+    class CouldNotParseInfoException extends Exception {
+        public CouldNotParseInfoException(String err) {
+            super(err);
+        }
     }
 }
+

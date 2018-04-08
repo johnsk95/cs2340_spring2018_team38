@@ -2,6 +2,7 @@ package com.example.team38;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,14 +26,15 @@ public class User {
     public static User currentUser;
 
     //the name of the user
-    private static String name;
+    private String name;
     //the loginID of the user
-    private static String id;
+    private String id;
     //what account type the user is
     private AccountType accountType;
     //the password for the user's account
     private String password;
     //the claimed shelter
+    @Nullable
     private HomelessShelter shelter = null;
     //the claimed number of beds
     private int numSpots = 0;

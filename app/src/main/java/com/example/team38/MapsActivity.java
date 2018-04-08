@@ -180,8 +180,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if ((grantResults.length > 0)
+                        && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
 
                     // permission was granted, yay! Do the
                     // location-related task you need to do.

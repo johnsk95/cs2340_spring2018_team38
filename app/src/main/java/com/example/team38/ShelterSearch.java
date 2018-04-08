@@ -32,8 +32,11 @@ public class ShelterSearch extends AppCompatActivity {
     Button searchButton;
     RadioGroup genderRadioGroup;
     ArrayList<HomelessShelter> shelters;
-    RadioButton menButton, womenButton;
-    RadioButton familyWithNewbornButton, childrenButton, youngAdultButton;
+    RadioButton menButton;
+    RadioButton womenButton;
+    RadioButton familyWithNewbornButton;
+    RadioButton childrenButton;
+    RadioButton youngAdultButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +84,9 @@ public class ShelterSearch extends AppCompatActivity {
                 while (data_iterator.hasNext()) {
                     datum = data_iterator.next();
                     HomelessShelter s = new HomelessShelter(datum);
-                    if (includeInSearch(s)) shelters.add(new HomelessShelter(datum));
+                    if (includeInSearch(s)) {
+                        shelters.add(new HomelessShelter(datum));
+                    }
                 }
                 transferToFilteredList();
             }
@@ -96,22 +101,31 @@ public class ShelterSearch extends AppCompatActivity {
 
     public boolean includeInSearch(HomelessShelter s) {
 
-        if (!s.name.toLowerCase().contains(nameFilter.getText().toString().toLowerCase()))
+        if (!s.name.toLowerCase().contains(nameFilter.getText().toString().toLowerCase())) {
             return false;
+        }
         // TODO This will of course mean that women shelters get returned along with men
         // ones. This should be fixed (duH)
         if (menButton.isChecked() && !s.allowed.toLowerCase().replace("women",
-                "").contains("men"))
+                "").contains("men")) {
             return false;
-        if (womenButton.isChecked() && !s.allowed.toLowerCase().contains("women"))
+        }
+        if (womenButton.isChecked() && !s.allowed.toLowerCase().contains("women")) {
             return false;
+        }
 
         if (familyWithNewbornButton.isChecked() &&
-                !s.allowed.toLowerCase().contains("newborn")) return false;
+                !s.allowed.toLowerCase().contains("newborn")) {
+            return false;
+        }
         if (childrenButton.isChecked() &&
-                !s.allowed.toLowerCase().contains("children")) return false;
+                !s.allowed.toLowerCase().contains("children")) {
+            return false;
+        }
         if (youngAdultButton.isChecked() &&
-                !s.allowed.toLowerCase().contains("young adult")) return false;
+                !s.allowed.toLowerCase().contains("young adult")) {
+            return false;
+        }
 
         return true;
     }

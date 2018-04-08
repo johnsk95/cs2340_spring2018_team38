@@ -2,5 +2,4 @@
     <string name="app_name">team38</string>
     <string name="title_activity_shelter_detail_view">ShelterDetailView</string>
     <string name="title_activity_shelter_search">ShelterSearch</string>
-    <string name="action_settings">Settings</string>
 </resources>

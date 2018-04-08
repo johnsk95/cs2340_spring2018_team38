@@ -52,7 +52,9 @@ public class ShelterDetailView extends AppCompatActivity {
     }
 
     CharSequence shelterToTextString(HomelessShelter shelter) {
-        if(shelter == null) return "None";
+        if(shelter == null) {
+            return "None";
+        }
         return "Name: \r\r" + shelter.name + "\n\nCapacity: \r\r" + shelter.capacity
                 + "\n\nAllowed Tenants: \r\r" + shelter.allowed + "\n\nAddress: \r\r"
                 + shelter.address + "\n\nLatitude: \r\r" + shelter.latitude + "\nLongitude: \r\r"

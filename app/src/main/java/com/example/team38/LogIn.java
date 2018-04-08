@@ -82,9 +82,11 @@ public class LogIn extends AppCompatActivity {
 
     private void setCurrentUser(String name, String uid, String pass, String accountType,
                                 HomelessShelter shelter, Integer numSpots) {
-        if(numSpots == null) {
-            numSpots = 0;
+        Integer numSpots1 = numSpots;
+        if (numSpots1 == null) {
+            numSpots1 = 0;
         }
-        User.currentUser = new User(name, uid, pass, accountType, shelter, numSpots);
+        //noinspection AssignmentToStaticFieldFromInstanceMethod
+        User.currentUser = new User(name, uid, pass, accountType, shelter, numSpots1);
     }
 }
