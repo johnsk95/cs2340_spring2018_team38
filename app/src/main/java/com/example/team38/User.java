@@ -1,21 +1,13 @@
 package com.example.team38;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Created by Nathaniel on 2/18/2018.
@@ -23,7 +15,7 @@ import java.util.Iterator;
  */
 
 public class User {
-    public static User currentUser;
+    static User currentUser;
 
     //the name of the user
     private String name;
@@ -51,7 +43,7 @@ public class User {
     }
 
     public User(String name, String id, String password, String accountType,
-                HomelessShelter shelter, int numSpots) {
+                @Nullable HomelessShelter shelter, int numSpots) {
         this.name = name;
         this.id = id;
         this.password = password;
@@ -74,7 +66,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "name: " + name + "  id: " + id + "  account type: " + accountType.toString() + "  password: " + password;
+        return "name: " + name + "  id: " + id + "  account type: " + accountType.toString()
+                + "  password: " + password;
     }
 
     public String getName() {
@@ -93,6 +86,7 @@ public class User {
         return password;
     }
 
+    @Nullable
     public HomelessShelter getShelter() {
         return shelter;
     }
@@ -110,14 +104,15 @@ public class User {
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Long cap = dataSnapshot.child("ShelterList").child("" + currentUser.shelter.id).child("capacity")
-                        .getValue(Long.class);
+                Long cap = dataSnapshot.child("ShelterList").child("" + currentUser.shelter.id)
+                        .child("capacity").getValue(Long.class);
                 if(cap == null) {
                     cap = (long) currentUser.numSpots;
                 } else {
                     cap += currentUser.numSpots;
                 }
-                db.child("ShelterList").child("" + currentUser.shelter.id).child("capacity").setValue(cap);
+                db.child("ShelterList").child("" + currentUser.shelter.id).child("capacity")
+                        .setValue(cap);
                 db.child("UserList").child(currentUser.getId()).child("shelter").setValue(null);
                 db.child("UserList").child(currentUser.getId()).child("numSpots").setValue(0);
                 currentUser.shelter = null;
@@ -145,11 +140,13 @@ public class User {
                     Log.d("ClaimSuccess", "The claim was successful!");
                     Long cap = dataSnapshot.child("ShelterList/" + shelter.id)
                             .child("capacity").getValue(Long.class);
-                    if(cap >= numSpots) {
+                    if(cap != null && cap >= numSpots) {
                         db.child("ShelterList/" + shelter.id).child("capacity").setValue(
                                 cap - numSpots);
-                        db.child("UserList").child(currentUser.getId()).child("shelter").setValue(shelter);
-                        db.child("UserList").child(currentUser.getId()).child("numSpots").setValue(numSpots);
+                        db.child("UserList").child(currentUser.getId()).child("shelter")
+                                .setValue(shelter);
+                        db.child("UserList").child(currentUser.getId()).child("numSpots")
+                                .setValue(numSpots);
                         currentUser.shelter = shelter;
                         currentUser.numSpots = numSpots;
                     } else {

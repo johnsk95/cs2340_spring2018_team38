@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -25,14 +26,16 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.location.LocationServices;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Nathaniel on 3/9/2018.
+ *
+ * Lets users see a map
  */
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,
+        GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap shelterMap;
     private List<HomelessShelter> shelters;
@@ -42,7 +45,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private SupportMapFragment frag;
     private LocationRequest request;
 
-    private static final int unknownVar1 = 120000;
+    private static final int TWO_MINUTES_IN_MILLISECONDS = 120000;
     private static final int unknownVar2 = 11;
 
 
@@ -71,8 +74,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         shelterMap = googleMap;
         // location request
         request = new LocationRequest();
-        request.setInterval(unknownVar1); // two minutes (can be changed for higher accuracy if needed)
-        request.setFastestInterval(unknownVar1);
+        request.setInterval(TWO_MINUTES_IN_MILLISECONDS);
+        // two minutes (can be changed for higher accuracy if needed)
+        request.setFastestInterval(TWO_MINUTES_IN_MILLISECONDS);
         // can use high accuracy if we need more precise location but uses more power
         request.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
@@ -165,7 +169,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 markerOptions.title("Current Position");
 
 
-                //markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                //markerOptions.icon(BitmapDescriptorFactory
+                // .defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
                 //marker = shelterMap.addMarker(markerOptions);
 
                 //move map camera
@@ -176,7 +181,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     };
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
                 // If request is cancelled, the result arrays are empty.
@@ -197,7 +203,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG)
+                            .show();
                 }
             }
         }

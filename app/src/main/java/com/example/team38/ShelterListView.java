@@ -39,7 +39,7 @@ public class ShelterListView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainscreen);
 
-        shelterListView = (ListView) findViewById(R.id.shelter_listview);
+        shelterListView = findViewById(R.id.shelter_listview);
 
         // To allow reuse of this same activity for the search bar, I essentially
         // add a lambda expression as an argument
@@ -48,7 +48,7 @@ public class ShelterListView extends AppCompatActivity {
             // NOTE: THIS CODE IS HEAVILY DUPLICATED IN SHELTER-SEARCH
             final DatabaseReference shelter_db;
 
-            shelters = new ArrayList<HomelessShelter>();
+            shelters = new ArrayList<>();
             shelter_db = FirebaseDatabase.getInstance().getReferenceFromUrl(
                     "https://project-42226.firebaseio.com/ShelterList");
             shelter_db.addValueEventListener(new ValueEventListener() {
@@ -56,8 +56,23 @@ public class ShelterListView extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     GenericTypeIndicator<ArrayList<HashMap<String, Object>>> typeIndicator =
                             new GenericTypeIndicator<ArrayList<HashMap<String, Object>>>() {};
-                    Iterator<HashMap<String, Object>> data_iterator =
-                            dataSnapshot.getValue(typeIndicator).iterator();
+                    Iterator<HashMap<String, Object>> data_iterator;
+                    try {
+                        data_iterator =
+                                dataSnapshot.getValue(typeIndicator).iterator();
+                    } catch(NullPointerException e) {
+                        data_iterator = new Iterator<HashMap<String, Object>>() {
+                            @Override
+                            public boolean hasNext() {
+                                return false;
+                            }
+
+                            @Override
+                            public HashMap<String, Object> next() {
+                                return null;
+                            }
+                        };
+                    }
                     HashMap<String, Object> datum;
                     while (data_iterator.hasNext()) {
                         datum = data_iterator.next();
@@ -81,7 +96,7 @@ public class ShelterListView extends AppCompatActivity {
         refreshShelterListView();
     }
     private void refreshShelterListView() {
-        ListAdapter arrayAdapter = new ArrayAdapter<HomelessShelter>(this,
+        ListAdapter arrayAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, shelters);
         shelterListView.setAdapter(arrayAdapter);
         shelterListView.setOnItemClickListener(new AdapterView.OnItemClickListener()

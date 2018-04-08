@@ -1,7 +1,6 @@
 package com.example.team38;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -36,22 +35,25 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         //sets the widget variables
-        nameBox = (EditText) findViewById(R.id.regname);
-        idBox = (EditText) findViewById(R.id.regID);
-        passBox = (EditText) findViewById(R.id.regPassword);
-        accountType = (Spinner) findViewById(R.id.AccountSpinner);
+        nameBox = findViewById(R.id.regname);
+        idBox = findViewById(R.id.regID);
+        passBox = findViewById(R.id.regPassword);
+        accountType = findViewById(R.id.AccountSpinner);
 
         //puts the possible user types into the spinner
-        ArrayAdapter<String> adapter = (ArrayAdapter<String>) new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, AccountType.values());
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) new ArrayAdapter(this,
+                android.R.layout.simple_spinner_dropdown_item, AccountType.values());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         accountType.setAdapter(adapter);
     }
     /**
     Registers a new user in the map if the user id is not already in use
+     * @param view
      */
     public void onRegisterClicked(View view) {
         Log.d("RegScreen", "Register Button Pressed");
-        //registers as a new user if the id is not already in use, shows an error message if the id is in use
+        //registers as a new user if the id is not already in use,
+        //shows an error message if the id is in use
         final String uid = idBox.getText().toString();
         final String pass = passBox.getText().toString();
         final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
@@ -62,12 +64,14 @@ public class Register extends AppCompatActivity {
                 if(dataSnapshot.hasChild(uid)) {
                     final Context context = getApplicationContext();
                     final int duration = Toast.LENGTH_SHORT;
-                    final Toast t = Toast.makeText(context, "registration failed: userID is already in use", duration);
+                    final Toast t = Toast.makeText(context,
+                            "registration failed: userID is already in use", duration);
                     t.show();
                 } else {
-                    User user = new User(nameBox.getText().toString(), uid, pass, (AccountType) accountType.getSelectedItem());
-                    Log.d("newUser", "NEW USER: " + user.getName() + " " + user.getId() + " "
-                            + user.getPassword() + " " + user.getAccountType().toString());
+                    User user = new User(nameBox.getText().toString(), uid, pass,
+                            (AccountType) accountType.getSelectedItem());
+                    Log.d("newUser", "NEW USER: " + user.getName() + " " + user.getId()
+                            + " " + user.getPassword() + " " + user.getAccountType().toString());
                     db.child(uid).setValue(user);
                     finish();
                 }
@@ -75,12 +79,12 @@ public class Register extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError firebaseError) {
-                //TODO
             }
         });
     }
     /**
     Goes back to the main screen is cancel is pressed
+     * @param view
      */
     public void onCancelClicked(View view) {
         finish();

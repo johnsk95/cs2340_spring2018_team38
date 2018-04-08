@@ -6,12 +6,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 
@@ -42,10 +40,10 @@ public class ShelterSearch extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelter_search);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,12 +54,12 @@ public class ShelterSearch extends AppCompatActivity {
 
 //        searchButton = (Button) findViewById(R.id.searchbutton);
 //        genderRadioGroup = (RadioGroup) findViewById(R.id.genderButtonGroup);
-        nameFilter = (TextView) findViewById(R.id.shelterSearchNameFilterID);
+        nameFilter = findViewById(R.id.shelterSearchNameFilterID);
 
-        menButton = (RadioButton) findViewById(R.id.genderMen);
-        womenButton = (RadioButton) findViewById(R.id.genderWomen);
-        familyWithNewbornButton = (RadioButton) findViewById(R.id.ageRangeFamWithNewborns);
-        childrenButton = (RadioButton) findViewById(R.id.ageRangeChildren);
+        menButton = findViewById(R.id.genderMen);
+        womenButton = findViewById(R.id.genderWomen);
+        familyWithNewbornButton = findViewById(R.id.ageRangeFamWithNewborns);
+        childrenButton = findViewById(R.id.ageRangeChildren);
         youngAdultButton = findViewById(R.id.ageRangeYoungAdults);
 
     }
@@ -70,7 +68,7 @@ public class ShelterSearch extends AppCompatActivity {
         // NOTE; THIS CODE IS HEAVILY DUPLICATED IN SHELTERVIEWLIST.JAVA
         final DatabaseReference shelter_db;
 
-        shelters = new ArrayList<HomelessShelter>();
+        shelters = new ArrayList<>();
         shelter_db = FirebaseDatabase.getInstance().getReferenceFromUrl(
                 "https://project-42226.firebaseio.com/ShelterList");
         shelter_db.addValueEventListener(new ValueEventListener() {
@@ -78,8 +76,23 @@ public class ShelterSearch extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 GenericTypeIndicator<ArrayList<HashMap<String, Object>>> typeIndicator =
                         new GenericTypeIndicator<ArrayList<HashMap<String, Object>>>() {};
-                Iterator<HashMap<String, Object>> data_iterator =
+                Iterator<HashMap<String, Object>> data_iterator;
+                try {
+                    data_iterator =
                         dataSnapshot.getValue(typeIndicator).iterator();
+                } catch(NullPointerException e) {
+                    data_iterator = new Iterator<HashMap<String, Object>>() {
+                        @Override
+                        public boolean hasNext() {
+                            return false;
+                        }
+
+                        @Override
+                        public HashMap<String, Object> next() {
+                            return null;
+                        }
+                    };
+                }
                 HashMap<String, Object> datum;
                 while (data_iterator.hasNext()) {
                     datum = data_iterator.next();
@@ -104,8 +117,6 @@ public class ShelterSearch extends AppCompatActivity {
         if (!s.name.toLowerCase().contains(nameFilter.getText().toString().toLowerCase())) {
             return false;
         }
-        // TODO This will of course mean that women shelters get returned along with men
-        // ones. This should be fixed (duH)
         if (menButton.isChecked() && !s.allowed.toLowerCase().replace("women",
                 "").contains("men")) {
             return false;

@@ -1,14 +1,11 @@
 package com.example.team38;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,13 +29,12 @@ public class UserView extends AppCompatActivity {
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                TextView infoDisplay = (TextView) findViewById(R.id.UserInfoBox);
+                TextView infoDisplay = findViewById(R.id.UserInfoBox);
                 infoDisplay.setText(userToTextString(dataSnapshot.getValue(User.class)));
             }
 
             @Override
             public void onCancelled(DatabaseError firebaseError) {
-                //TODO
             }
         });
 
@@ -55,13 +51,12 @@ public class UserView extends AppCompatActivity {
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                TextView infoDisplay = (TextView) findViewById(R.id.UserInfoBox);
+                TextView infoDisplay = findViewById(R.id.UserInfoBox);
                 infoDisplay.setText(userToTextString(dataSnapshot.getValue(User.class)));
             }
 
             @Override
             public void onCancelled(DatabaseError firebaseError) {
-                //TODO
             }
         });
     }
@@ -75,13 +70,12 @@ public class UserView extends AppCompatActivity {
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                TextView infoDisplay = (TextView) findViewById(R.id.UserInfoBox);
+                TextView infoDisplay = findViewById(R.id.UserInfoBox);
                 infoDisplay.setText(userToTextString(dataSnapshot.getValue(User.class)));
             }
 
             @Override
             public void onCancelled(DatabaseError firebaseError) {
-                //TODO
             }
         });
     }

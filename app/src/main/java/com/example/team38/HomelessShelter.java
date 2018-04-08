@@ -4,11 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by anish on 3/3/18.
+ *
+ * Stores information about a homeless shelter
  */
 
 public class HomelessShelter implements Parcelable {
@@ -113,19 +113,17 @@ public class HomelessShelter implements Parcelable {
         return 0;
     }
 
-// --Commented out by Inspection START (4/8/18 4:58 PM):
-//    public static final Creator<HomelessShelter> CREATOR = new Creator<HomelessShelter>() {
-//        @Override
-//        public HomelessShelter createFromParcel(Parcel in) {
-//            return new HomelessShelter(in);
-//        }
-//
-//        @Override
-//        public HomelessShelter[] newArray(int size) {
-//            return new HomelessShelter[size];
-//        }
-//    };
-// --Commented out by Inspection STOP (4/8/18 4:58 PM)
+    public static final Creator<HomelessShelter> CREATOR = new Creator<HomelessShelter>() {
+        @Override
+        public HomelessShelter createFromParcel(Parcel in) {
+            return new HomelessShelter(in);
+        }
+
+        @Override
+        public HomelessShelter[] newArray(int size) {
+            return new HomelessShelter[size];
+        }
+    };
 
     public String toString(){
         return name;
@@ -136,8 +134,8 @@ public class HomelessShelter implements Parcelable {
         if(o instanceof HomelessShelter) {
             HomelessShelter s = (HomelessShelter) o;
             return (id == s.id) && name.equals(s.name) && (latitude == s.latitude)
-                    && (longitude == s.longitude) && (address == s.address) && (shelterType
-                    == s.shelterType) && (phoneNumber == s.phoneNumber);
+                    && (longitude == s.longitude) && (address.equals(s.address)) && (shelterType.equals(
+                    s.shelterType)) && (phoneNumber.equals(s.phoneNumber));
         }
         return false;
     }
