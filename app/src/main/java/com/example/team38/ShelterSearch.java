@@ -81,6 +81,10 @@ public class ShelterSearch extends AppCompatActivity {
         shelter_db.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                // Literally it's supposed to be empty
+                // https://www.firebase.com/docs/java-api/javadoc/com/firebase/
+                // client/GenericTypeIndicator.html
                 GenericTypeIndicator<ArrayList<HashMap<String, Object>>> typeIndicator =
                         new GenericTypeIndicator<ArrayList<HashMap<String, Object>>>() {};
                 Iterator<HashMap<String, Object>> data_iterator;

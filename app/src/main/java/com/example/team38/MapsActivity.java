@@ -67,7 +67,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // setting up the map
         client = LocationServices.getFusedLocationProviderClient(this);
         //noinspection ChainedMethodCall
-        SupportMapFragment frag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment frag = (SupportMapFragment)
+                getSupportFragmentManager().findFragmentById(R.id.map);
         frag.getMapAsync(this);
     }
 
@@ -162,7 +163,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         public void onLocationResult(LocationResult locationResult) {
             for (Location location : locationResult.getLocations()) {
 
-                Location lastLocation = location;
                 if (marker != null) {
                     marker.remove();
                 }

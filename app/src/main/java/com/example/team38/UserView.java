@@ -49,8 +49,7 @@ public class UserView extends AppCompatActivity {
         super.onResume();
 //        TextView infoDisplay = (TextView) findViewById(R.id.UserInfoBox);
 //        infoDisplay.setText(userToTextString(User.currentUser));
-        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db =
-                FirebaseDatabase.getInstance().
+        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db = FirebaseDatabase.getInstance().
                 getReferenceFromUrl(
                 "https://project-42226.firebaseio.com/UserList/" + User.currentUser.getId());
         db.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -70,8 +69,7 @@ public class UserView extends AppCompatActivity {
         super.onRestart();
 //        TextView infoDisplay = (TextView) findViewById(R.id.UserInfoBox);
 //        infoDisplay.setText(userToTextString(User.currentUser));
-        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db =
-                FirebaseDatabase.getInstance().
+        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db = FirebaseDatabase.getInstance().
                 getReferenceFromUrl(
                 "https://project-42226.firebaseio.com/UserList/" + User.currentUser.getId());
         db.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -115,7 +113,7 @@ public class UserView extends AppCompatActivity {
     }
 
     /**
-     * @param view passed in automatically
+     * @param view passed in automa
      */
     public void onLeaveShelterButtonClicked(@SuppressWarnings("unused") View view) {
         Log.d("UserViewScreen", "Leave Shelter Button Pressed");

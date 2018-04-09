@@ -56,12 +56,19 @@ public class LogIn extends AppCompatActivity {
                     if(pass.equals(pwd)) {
                         Log.d("LoginScreen", "Correct login!");
 
-                        setCurrentUser(dataSnapshot.child(uid).child("name").getValue(String.class),
-                                uid, pass, dataSnapshot.child(uid).child("accountType")
-                                        .getValue(String.class),
-                                dataSnapshot.child(uid).child("shelter")
-                                        .getValue(HomelessShelter.class),
-                                dataSnapshot.child(uid).child("numSpots").getValue(Integer.class));
+                        // String name, String uid, String pass, String accountType,
+                        // HomelessShelter shelter, Integer numSpots
+
+                        String argName = dataSnapshot.child(uid).child("name").getValue(String.class);
+                        String argAccountType = dataSnapshot.child(uid).child("accountType")
+                                .getValue(String.class);
+                        HomelessShelter argHomelessShelter = dataSnapshot.child(uid).child("shelter")
+                                .getValue(HomelessShelter.class);
+                        Integer argNumSpots = dataSnapshot.child(uid).child("numSpots").getValue(Integer.class);
+
+                        User newCurrentUser = new User(argName, uid, pass, argAccountType,
+                                argHomelessShelter, ((argNumSpots != null) ? argNumSpots : 0));
+                        setCurrentUser(newCurrentUser, argNumSpots);
                         startActivity(intent);
                     } else {
                         final Context context = getApplicationContext();
@@ -85,13 +92,11 @@ public class LogIn extends AppCompatActivity {
         });
     }
 
-    private void setCurrentUser(String name, String uid, String pass, String accountType,
-                                HomelessShelter shelter, Integer numSpots) {
+    private static void setCurrentUser(User newCurrentUser, Integer numSpots) {
         Integer numSpots1 = numSpots;
         if (numSpots1 == null) {
             numSpots1 = 0;
         }
-        //noinspection AssignmentToStaticFieldFromInstanceMethod
-        User.currentUser = new User(name, uid, pass, accountType, shelter, numSpots1);
+        User.currentUser = newCurrentUser;
     }
 }

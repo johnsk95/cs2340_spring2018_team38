@@ -73,8 +73,7 @@ public class Register extends AppCompatActivity {
                             new User(nameBox.getText().toString(), uid, pass,
                             (AccountType) accountType.getSelectedItem());
                     //noinspection ChainedMethodCall
-                    Log.d("newUser", "NEW USER: " + user.getName() + " " + user.getId()
-                            + " " + user.getPassword() + " " + user.getAccountTypeAsString());
+                    Log.d("newUser", user.toString());
                     //noinspection ChainedMethodCall
                     db.child(uid).setValue(user);
                     finish();

@@ -57,10 +57,15 @@ public class ShelterListView extends AppCompatActivity {
             shelter_db.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    // This is literally how it's supposed to be used
+                    // https://www.firebase.com/docs/java-api/javadoc/com/firebase/
+                    // client/GenericTypeIndicator.html
                     GenericTypeIndicator<ArrayList<HashMap<String, Object>>> typeIndicator =
                             new GenericTypeIndicator<ArrayList<HashMap<String, Object>>>() {};
                     Iterator<HashMap<String, Object>> data_iterator;
-                    List<HashMap<String, Object>> data_iterator_map = dataSnapshot.getValue(typeIndicator);
+                    List<HashMap<String, Object>> data_iterator_map =
+                            dataSnapshot.getValue(typeIndicator);
                     if (data_iterator_map != null) {
                         data_iterator = data_iterator_map.iterator();
                     } else {

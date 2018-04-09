@@ -68,7 +68,6 @@ public class ShelterDetailView extends AppCompatActivity {
      */
     public void onMapClicked(@SuppressWarnings("unused") View view) {
         Log.d("ShelterDetScreen", "Map Button Pressed");
-        //TODO: brings the user to a map with the location of the selected shelter
     }
 
     /**
