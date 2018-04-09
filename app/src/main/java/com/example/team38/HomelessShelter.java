@@ -76,6 +76,9 @@ public class HomelessShelter implements Parcelable {
         phoneNumber = in.readString();
     }
 
+    /**
+     * @param shelter_dictionary take in a dictionary/hashmap to populate from
+     */
     public HomelessShelter(HashMap<String, Object> shelter_dictionary) {
 
         id = (int) ((long) shelter_dictionary.get("id"));
@@ -135,8 +138,8 @@ public class HomelessShelter implements Parcelable {
         if(o instanceof HomelessShelter) {
             HomelessShelter s = (HomelessShelter) o;
             return (id == s.id) && name.equals(s.name) && (latitude == s.latitude)
-                    && (longitude == s.longitude) && (address.equals(s.address)) && (shelterType.equals(
-                    s.shelterType)) && (phoneNumber.equals(s.phoneNumber));
+                    && (longitude == s.longitude) && (address.equals(s.address)) &&
+                    (shelterType.equals(s.shelterType)) && (phoneNumber.equals(s.phoneNumber));
         }
         return false;
     }

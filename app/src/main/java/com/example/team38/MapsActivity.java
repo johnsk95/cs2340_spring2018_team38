@@ -40,11 +40,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap shelterMap;
     private List<HomelessShelter> shelters;
     @SuppressWarnings("unused")
-    private Location lastLocation;
-    @SuppressWarnings("unused")
     private Marker marker;
     private FusedLocationProviderClient client;
-    private SupportMapFragment frag;
     private LocationRequest request;
 
     private static final int TWO_MINUTES_IN_MILLISECONDS = 120000;
@@ -59,7 +56,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_maps);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        @SuppressWarnings("ChainedMethodCall") SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        @SuppressWarnings("ChainedMethodCall") SupportMapFragment mapFragment =
+                (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -69,7 +67,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // setting up the map
         client = LocationServices.getFusedLocationProviderClient(this);
         //noinspection ChainedMethodCall
-        frag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment frag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         frag.getMapAsync(this);
     }
 
@@ -100,7 +98,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         int counter = 0;
         for (HomelessShelter shelter: shelters) {
             LatLng shelterLoc = new LatLng(shelter.longitude, shelter.latitude);
-            @SuppressWarnings("ChainedMethodCall") Marker shelterMarker = shelterMap.addMarker(new MarkerOptions()
+            @SuppressWarnings("ChainedMethodCall") Marker shelterMarker = shelterMap.addMarker(
+                    new MarkerOptions()
                     .position(shelterLoc)
                     .title(shelter.name)
             .snippet("Phone: " + shelter.phoneNumber));
@@ -123,7 +122,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
 
                 // sends an alert to the user if location is disabled
-                //noinspection ChainedMethodCall,ChainedMethodCall,ChainedMethodCall,ChainedMethodCall,ChainedMethodCall
+                //noinspection ChainedMethodCall,ChainedMethodCall,
+                //ChainedMethodCall,ChainedMethodCall,ChainedMethodCall
                 new AlertDialog.Builder(this)
                         .setTitle("Location Permission Needed")
                         .setMessage("This app needs your current location")
@@ -162,7 +162,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         public void onLocationResult(LocationResult locationResult) {
             for (Location location : locationResult.getLocations()) {
 
-                lastLocation = location;
+                Location lastLocation = location;
                 if (marker != null) {
                     marker.remove();
                 }

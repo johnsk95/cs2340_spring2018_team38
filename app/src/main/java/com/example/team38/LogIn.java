@@ -28,6 +28,9 @@ public class LogIn extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
+    /**
+     * @param view the thing to operatoe on
+     */
     public void onLoginClicked(@SuppressWarnings("unused") View view) {
         Log.d("LoginScreen", "Login Button Pressed");
         final Intent intent = new Intent(this, ShelterListView.class);
@@ -40,16 +43,19 @@ public class LogIn extends AppCompatActivity {
         Log.d("pw", pass); //Why are we logging passwords?
         //checks if the user id exists and if the password is correct
         //if not a warning message is displayed
-        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db =
+                FirebaseDatabase.getInstance().getReferenceFromUrl(
                 "https://project-42226.firebaseio.com/UserList");
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild(uid)) {
-                    @SuppressWarnings("ChainedMethodCall") String pwd = dataSnapshot.child(uid).child("password").getValue(String.class);
+                    @SuppressWarnings("ChainedMethodCall") String pwd =
+                            dataSnapshot.child(uid).child("password" +
+                            "").getValue(String.class);
                     if(pass.equals(pwd)) {
                         Log.d("LoginScreen", "Correct login!");
-                        //noinspection ChainedMethodCall,ChainedMethodCall,ChainedMethodCall,ChainedMethodCall,ChainedMethodCall,ChainedMethodCall,ChainedMethodCall,ChainedMethodCall
+
                         setCurrentUser(dataSnapshot.child(uid).child("name").getValue(String.class),
                                 uid, pass, dataSnapshot.child(uid).child("accountType")
                                         .getValue(String.class),

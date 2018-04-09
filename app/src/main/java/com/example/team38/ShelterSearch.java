@@ -7,9 +7,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 
@@ -23,7 +21,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
+/**
+ * Yippe
+ */
 public class ShelterSearch extends AppCompatActivity {
 
     private TextView nameFilter;
@@ -65,6 +67,9 @@ public class ShelterSearch extends AppCompatActivity {
 
     }
 
+    /**
+     * @param view the view to operate on
+     */
     public void onSearchButtonClicked(@SuppressWarnings("unused") View view) {
         // NOTE; THIS CODE IS HEAVILY DUPLICATED IN SHELTERVIEWLIST.JAVA
         final DatabaseReference shelter_db;
@@ -79,11 +84,12 @@ public class ShelterSearch extends AppCompatActivity {
                 GenericTypeIndicator<ArrayList<HashMap<String, Object>>> typeIndicator =
                         new GenericTypeIndicator<ArrayList<HashMap<String, Object>>>() {};
                 Iterator<HashMap<String, Object>> data_iterator;
-                try {
-                    //noinspection ChainedMethodCall
-                    data_iterator =
-                        dataSnapshot.getValue(typeIndicator).iterator();
-                } catch(NullPointerException e) {
+
+                List<HashMap<String, Object>> data_iterator_map =
+                        dataSnapshot.getValue(typeIndicator);
+                if (data_iterator_map != null) {
+                    data_iterator = data_iterator_map.iterator();
+                } else {
                     data_iterator = new Iterator<HashMap<String, Object>>() {
                         @Override
                         public boolean hasNext() {
@@ -135,7 +141,7 @@ public class ShelterSearch extends AppCompatActivity {
     }
     private boolean youngAdultDoesNotMatch(HomelessShelter s) {
         return !(youngAdultButton.isChecked() &&
-                !s.allowed.toLowerCase().contains("young adult"))
+                !s.allowed.toLowerCase().contains("young adult"));
     }
 
     private boolean includeInSearch(HomelessShelter s) {

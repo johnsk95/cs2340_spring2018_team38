@@ -48,7 +48,7 @@ public class Register extends AppCompatActivity {
     }
     /**
     Registers a new user in the map if the user id is not already in use
-     * @param view
+     * @param view operate on this view
      */
     public void onRegisterClicked(@SuppressWarnings("unused") View view) {
         Log.d("RegScreen", "Register Button Pressed");
@@ -56,7 +56,8 @@ public class Register extends AppCompatActivity {
         //shows an error message if the id is in use
         @SuppressWarnings("ChainedMethodCall") final String uid = idBox.getText().toString();
         @SuppressWarnings("ChainedMethodCall") final String pass = passBox.getText().toString();
-        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db =
+                FirebaseDatabase.getInstance().getReferenceFromUrl(
                 "https://project-42226.firebaseio.com/UserList");
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -68,7 +69,8 @@ public class Register extends AppCompatActivity {
                             "registration failed: userID is already in use", duration);
                     t.show();
                 } else {
-                    @SuppressWarnings("ChainedMethodCall") User user = new User(nameBox.getText().toString(), uid, pass,
+                    @SuppressWarnings("ChainedMethodCall") User user =
+                            new User(nameBox.getText().toString(), uid, pass,
                             (AccountType) accountType.getSelectedItem());
                     //noinspection ChainedMethodCall
                     Log.d("newUser", "NEW USER: " + user.getName() + " " + user.getId()
@@ -86,7 +88,7 @@ public class Register extends AppCompatActivity {
     }
     /**
     Goes back to the main screen is cancel is pressed
-     * @param view
+     * @param view the button which is passed in
      */
     public void onCancelClicked(@SuppressWarnings("unused") View view) {
         finish();

@@ -21,6 +21,7 @@ import com.google.firebase.database.GenericTypeIndicator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by johnyi on 2/13/18.
@@ -59,11 +60,10 @@ public class ShelterListView extends AppCompatActivity {
                     GenericTypeIndicator<ArrayList<HashMap<String, Object>>> typeIndicator =
                             new GenericTypeIndicator<ArrayList<HashMap<String, Object>>>() {};
                     Iterator<HashMap<String, Object>> data_iterator;
-                    try {
-                        //noinspection ChainedMethodCall
-                        data_iterator =
-                                dataSnapshot.getValue(typeIndicator).iterator();
-                    } catch(NullPointerException e) {
+                    List<HashMap<String, Object>> data_iterator_map = dataSnapshot.getValue(typeIndicator);
+                    if (data_iterator_map != null) {
+                        data_iterator = data_iterator_map.iterator();
+                    } else {
                         data_iterator = new Iterator<HashMap<String, Object>>() {
                             @Override
                             public boolean hasNext() {
@@ -76,6 +76,7 @@ public class ShelterListView extends AppCompatActivity {
                             }
                         };
                     }
+
                     HashMap<String, Object> datum;
                     while (data_iterator.hasNext()) {
                         datum = data_iterator.next();
@@ -116,6 +117,9 @@ public class ShelterListView extends AppCompatActivity {
         });
     }
 
+    /**
+     * @param view the button
+     */
     public void onLogoutButtonClicked(@SuppressWarnings("unused") View view) {
         Log.d("ShelterListView", "Button Pressed");
         Intent intent = new Intent(this, MainActivity.class);
@@ -124,16 +128,26 @@ public class ShelterListView extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * @param view passed in automatically
+     */
     public void onSearchViewButtonClicked(@SuppressWarnings("unused") View view) {
         Intent intent = new Intent(this, ShelterSearch.class);
         startActivity(intent);
     }
 
+    /**
+     * @param view passed in automatically
+     */
     public void onMapButtonClicked(@SuppressWarnings("unused") View view) {
         Intent intent = new Intent(this, MapsActivity.class);
         intent.putParcelableArrayListExtra("SheltersToDisplay", shelters);
         startActivity(intent);
     }
+
+    /**
+     * @param view passed in automatically
+     */
     public void onUserInfoClicked(@SuppressWarnings("unused") View view) {
         Log.d("WelcomeScreen", "User Info button pressed");
         Intent intent = new Intent(this, UserView.class);

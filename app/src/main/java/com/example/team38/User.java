@@ -103,12 +103,14 @@ class User {
         if(currentUser.shelter == null) {
             return;
         }
-        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db =
+                FirebaseDatabase.getInstance().getReferenceFromUrl(
                 "https://project-42226.firebaseio.com");
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                @SuppressWarnings("ChainedMethodCall") Long cap = dataSnapshot.child("ShelterList").child("" + currentUser.shelter.id)
+                @SuppressWarnings("ChainedMethodCall") Long cap = dataSnapshot.child("ShelterList")
+                        .child("" + currentUser.shelter.id)
                         .child("capacity").getValue(Long.class);
                 if(cap == null) {
                     cap = (long) currentUser.numSpots;
@@ -139,13 +141,15 @@ class User {
             return;
         }
         if(shelter.capacity >= numSpots) {
-            @SuppressWarnings("ChainedMethodCall") final DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl(
+            @SuppressWarnings("ChainedMethodCall") final DatabaseReference db =
+                    FirebaseDatabase.getInstance().getReferenceFromUrl(
                     "https://project-42226.firebaseio.com");
             db.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Log.d("ClaimSuccess", "The claim was successful!");
-                    @SuppressWarnings("ChainedMethodCall") Long cap = dataSnapshot.child("ShelterList/" + shelter.id)
+                    @SuppressWarnings("ChainedMethodCall") Long cap = dataSnapshot
+                            .child("ShelterList/" + shelter.id)
                             .child("capacity").getValue(Long.class);
                     if((cap != null) && (cap >= numSpots)) {
                         //noinspection ChainedMethodCall,ChainedMethodCall
