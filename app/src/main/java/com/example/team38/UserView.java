@@ -49,7 +49,8 @@ public class UserView extends AppCompatActivity {
         super.onResume();
 //        TextView infoDisplay = (TextView) findViewById(R.id.UserInfoBox);
 //        infoDisplay.setText(userToTextString(User.currentUser));
-        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db = FirebaseDatabase.getInstance().
+        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db =
+                FirebaseDatabase.getInstance().
                 getReferenceFromUrl(
                 "https://project-42226.firebaseio.com/UserList/" + User.currentUser.getId());
         db.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -69,7 +70,8 @@ public class UserView extends AppCompatActivity {
         super.onRestart();
 //        TextView infoDisplay = (TextView) findViewById(R.id.UserInfoBox);
 //        infoDisplay.setText(userToTextString(User.currentUser));
-        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db = FirebaseDatabase.getInstance().
+        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db =
+                FirebaseDatabase.getInstance().
                 getReferenceFromUrl(
                 "https://project-42226.firebaseio.com/UserList/" + User.currentUser.getId());
         db.addListenerForSingleValueEvent(new ValueEventListener() {

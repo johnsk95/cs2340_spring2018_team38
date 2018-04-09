@@ -148,8 +148,8 @@ class User {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Log.d("ClaimSuccess", "The claim was successful!");
-                    @SuppressWarnings("ChainedMethodCall") Long cap = dataSnapshot
-                            .child("ShelterList/" + shelter.id)
+                    @SuppressWarnings("ChainedMethodCall") Long cap =
+                            dataSnapshot.child("ShelterList/" + shelter.id)
                             .child("capacity").getValue(Long.class);
                     if((cap != null) && (cap >= numSpots)) {
                         //noinspection ChainedMethodCall,ChainedMethodCall
