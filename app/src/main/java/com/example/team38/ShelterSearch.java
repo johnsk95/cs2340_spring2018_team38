@@ -115,35 +115,54 @@ public class ShelterSearch extends AppCompatActivity {
 
     }
 
+    private boolean namesDoNotMatch(HomelessShelter s) {
+        return !s.name.toLowerCase().contains(nameFilter.getText().toString().toLowerCase());
+    }
+    private boolean menDoesNotMatch(HomelessShelter s) {
+        return menButton.isChecked() && !s.allowed.toLowerCase().replace("women",
+                "").contains("men");
+    }
+    private boolean womenDoesNotMatch(HomelessShelter s) {
+        return womenButton.isChecked() && !s.allowed.toLowerCase().contains("women");
+    }
+    private boolean newbornDoesNotMatch(HomelessShelter s) {
+        return familyWithNewbornButton.isChecked() &&
+                !s.allowed.toLowerCase().contains("newborn");
+    }
+    private boolean childrenDoesNotMatch(HomelessShelter s) {
+        return childrenButton.isChecked() &&
+                !s.allowed.toLowerCase().contains("children");
+    }
+    private boolean youngAdultDoesNotMatch(HomelessShelter s) {
+        return !(youngAdultButton.isChecked() &&
+                !s.allowed.toLowerCase().contains("young adult"))
+    }
+
     private boolean includeInSearch(HomelessShelter s) {
 
         //noinspection ChainedMethodCall,ChainedMethodCall,ChainedMethodCall
-        if (!s.name.toLowerCase().contains(nameFilter.getText().toString().toLowerCase())) {
+        if (namesDoNotMatch(s)) {
             return false;
         }
         //noinspection ChainedMethodCall,ChainedMethodCall
-        if (menButton.isChecked() && !s.allowed.toLowerCase().replace("women",
-                "").contains("men")) {
+        if (menDoesNotMatch(s)) {
             return false;
         }
         //noinspection ChainedMethodCall
-        if (womenButton.isChecked() && !s.allowed.toLowerCase().contains("women")) {
+        if (womenDoesNotMatch(s)) {
             return false;
         }
 
         //noinspection ChainedMethodCall
-        if (familyWithNewbornButton.isChecked() &&
-                !s.allowed.toLowerCase().contains("newborn")) {
+        if (newbornDoesNotMatch(s)) {
             return false;
         }
         //noinspection ChainedMethodCall
-        if (childrenButton.isChecked() &&
-                !s.allowed.toLowerCase().contains("children")) {
+        if (childrenDoesNotMatch(s)) {
             return false;
         }
         //noinspection ChainedMethodCall
-        return !(youngAdultButton.isChecked() &&
-                !s.allowed.toLowerCase().contains("young adult"));
+        return youngAdultDoesNotMatch(s);
     }
 
     private void transferToFilteredList() {
