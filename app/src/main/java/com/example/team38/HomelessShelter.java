@@ -77,7 +77,7 @@ public class HomelessShelter implements Parcelable {
     }
 
     /**
-     * @param shelter_dictionary take in a dictionary/hashmap to populate from
+     * @param shelter_dictionary take in a dictionary/HashMap to populate from
      */
     public HomelessShelter(HashMap<String, Object> shelter_dictionary) {
 

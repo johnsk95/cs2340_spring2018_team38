@@ -14,7 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 /**
- * Javadoc for userview
+ * Javadoc for UserView
  */
 public class UserView extends AppCompatActivity {
 
