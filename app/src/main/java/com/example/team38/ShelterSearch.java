@@ -125,54 +125,61 @@ public class ShelterSearch extends AppCompatActivity {
 
     }
 
-    private boolean namesDoNotMatch(HomelessShelter s) {
-        return !s.name.toLowerCase().contains(nameFilter.getText().toString().toLowerCase());
+    // The naming convention is a bit confusing here: in general, each method returns
+    // should fail because the shelter does not satisfy 'x' and we're specifically looking for 'x'
+
+    // so for example, failOnWomen would fail if the "allowed" field doesn't contain women, and the
+    // box indicating that women are being looked for is checked.
+    private static boolean failOnNames(HomelessShelter s, String nameToContain) {
+        return !s.name.toLowerCase().contains(nameToContain.toLowerCase());
     }
-    private boolean menDoesNotMatch(HomelessShelter s) {
-        return menButton.isChecked() && !s.allowed.toLowerCase().replace("women",
+    private static boolean failOnMen(HomelessShelter s, boolean lookingForMen) {
+        return lookingForMen && !s.allowed.toLowerCase().replace("women",
                 "").contains("men");
     }
-    private boolean womenDoesNotMatch(HomelessShelter s) {
-        return womenButton.isChecked() && !s.allowed.toLowerCase().contains("women");
+    static boolean failOnWomen(HomelessShelter s, boolean lookingForWomen) {
+
+        return lookingForWomen && !s.allowed.toLowerCase().contains("women");
     }
-    private boolean newbornDoesNotMatch(HomelessShelter s) {
-        return familyWithNewbornButton.isChecked() &&
+    private static boolean failOnNewborn(HomelessShelter s, boolean lookingForNewborns) {
+        return lookingForNewborns &&
                 !s.allowed.toLowerCase().contains("newborn");
     }
-    private boolean childrenDoesNotMatch(HomelessShelter s) {
-        return childrenButton.isChecked() &&
+    private static boolean childrenDoesNotMatch(HomelessShelter s, boolean lookingForChildren) {
+        return lookingForChildren &&
                 !s.allowed.toLowerCase().contains("children");
     }
-    private boolean youngAdultDoesNotMatch(HomelessShelter s) {
-        return !(youngAdultButton.isChecked() &&
-                !s.allowed.toLowerCase().contains("young adult"));
+    private static boolean youngAdultDoesNotMatch(HomelessShelter s, boolean lookingForYoungAdults)
+    {
+        return lookingForYoungAdults &&
+                !s.allowed.toLowerCase().contains("young adult");
     }
 
     private boolean includeInSearch(HomelessShelter s) {
 
         //noinspection ChainedMethodCall,ChainedMethodCall,ChainedMethodCall
-        if (namesDoNotMatch(s)) {
+        if (failOnNames(s, nameFilter.getText().toString())) {
             return false;
         }
         //noinspection ChainedMethodCall,ChainedMethodCall
-        if (menDoesNotMatch(s)) {
+        if (failOnMen(s, menButton.isChecked())) {
             return false;
         }
         //noinspection ChainedMethodCall
-        if (womenDoesNotMatch(s)) {
+        if (failOnWomen(s, womenButton.isChecked())) {
             return false;
         }
 
         //noinspection ChainedMethodCall
-        if (newbornDoesNotMatch(s)) {
+        if (failOnNewborn(s, familyWithNewbornButton.isChecked())) {
             return false;
         }
         //noinspection ChainedMethodCall
-        if (childrenDoesNotMatch(s)) {
+        if (childrenDoesNotMatch(s, childrenButton.isChecked())) {
             return false;
         }
         //noinspection ChainedMethodCall
-        return youngAdultDoesNotMatch(s);
+        return youngAdultDoesNotMatch(s, youngAdultButton.isChecked());
     }
 
     private void transferToFilteredList() {
