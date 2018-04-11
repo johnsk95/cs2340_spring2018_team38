@@ -29,7 +29,7 @@ public class LogIn extends AppCompatActivity {
     }
 
     /**
-     * @param view the thing to operatoe on
+     * @param view the thing to operate on
      */
     public void onLoginClicked(@SuppressWarnings("unused") View view) {
         Log.d("LoginScreen", "Login Button Pressed");

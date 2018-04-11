@@ -115,7 +115,7 @@ public class UserView extends AppCompatActivity {
     }
 
     /**
-     * @param view passed in automa
+     * @param view passed in automatically
      */
     public void onLeaveShelterButtonClicked(@SuppressWarnings("unused") View view) {
         Log.d("UserViewScreen", "Leave Shelter Button Pressed");

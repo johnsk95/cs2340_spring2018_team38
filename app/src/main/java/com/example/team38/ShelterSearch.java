@@ -24,7 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Yippe
+ * javadoc
  */
 public class ShelterSearch extends AppCompatActivity {
 
