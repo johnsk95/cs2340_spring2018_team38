@@ -133,7 +133,9 @@ public class ShelterSearch extends AppCompatActivity {
     private static boolean failOnNames(HomelessShelter s, String nameToContain) {
         return !s.name.toLowerCase().contains(nameToContain.toLowerCase());
     }
-    private static boolean failOnMen(HomelessShelter s, boolean lookingForMen) {
+    // true if the shelter should not be included in the search
+    // true if looking for men's shelter and the shelter is not a men's shelter
+    static boolean failOnMen(HomelessShelter s, boolean lookingForMen) {
         return lookingForMen && !s.allowed.toLowerCase().replace("women",
                 "").contains("men");
     }
