@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -31,7 +30,7 @@ import java.util.List;
 /**
  * Created by Nathaniel on 3/9/2018.
  *
- * Lets users see a map
+ * Lets users see filtered shelters on Google Maps
  */
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,
@@ -45,7 +44,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private LocationRequest request;
 
     private static final int TWO_MINUTES_IN_MILLISECONDS = 120000;
-    private static final int unknownVar2 = 11;
+    private static final int cameraZoom = 11;
 
 
 
@@ -178,7 +177,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //marker = shelterMap.addMarker(markerOptions);
 
                 //move map camera
-                shelterMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, unknownVar2));
+                shelterMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, cameraZoom));
             }
         }
 
@@ -208,7 +207,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     // Disable the functionality that depends on this permission.
                     //noinspection ChainedMethodCall
                     if (marker != null) {
-                        shelterMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 11));
+                        shelterMap.moveCamera(CameraUpdateFactory
+                                .newLatLngZoom(marker.getPosition(), cameraZoom));
                     }
                 }
             }
