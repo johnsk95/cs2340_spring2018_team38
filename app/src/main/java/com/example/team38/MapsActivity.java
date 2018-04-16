@@ -76,7 +76,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         shelterMap = googleMap;
         // location request
-        request = new LocationRequest();
+        request = LocationRequest.create();
         request.setInterval(TWO_MINUTES_IN_MILLISECONDS);
         // two minutes (can be changed for higher accuracy if needed)
         request.setFastestInterval(TWO_MINUTES_IN_MILLISECONDS);
@@ -92,20 +92,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             //Request Location Permission
             checkLocationPermission();
         }
-        client.requestLocationUpdates(request, locationCallback, Looper.myLooper());
-        shelterMap.setMyLocationEnabled(true);
+
 
         // adds the shelter markers to the map
         int counter = 0;
         for (HomelessShelter shelter: shelters) {
             LatLng shelterLoc = new LatLng(shelter.longitude, shelter.latitude);
-            @SuppressWarnings("ChainedMethodCall") Marker shelterMarker = shelterMap.addMarker(
+            marker = shelterMap.addMarker(
                     new MarkerOptions()
                     .position(shelterLoc)
                     .title(shelter.name)
             .snippet("Phone: " + shelter.phoneNumber));
             // sets tag to location in shelters array
-            shelterMarker.setTag(counter);
+            marker.setTag(counter);
             counter++;
         }
         // starts ShelterDetailView activity when a points window is clicked
@@ -206,11 +205,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 } else {
 
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    // Disable the functionality that depends on this permission.
                     //noinspection ChainedMethodCall
-                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG)
-                            .show();
+                    if (marker != null) {
+                        shelterMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 11));
+                    }
                 }
             }
         }
