@@ -11,11 +11,10 @@ import static org.junit.Assert.*;
  */
 public class ChristianTest {
     /**
-     * @throws Exception When Something goes wrong
+     * Helper method to avoid functions getting too long
      */
-    @Test
-    public void homeless_shelter_equals_is_correct() throws Exception {
-        Object notAShelter = new Object();
+
+    private HashMap<String, Object> getShelterDictionary() {
         HashMap<String, Object> shelter_dictionary = new HashMap<>();
         shelter_dictionary.put("id", 0L);
         shelter_dictionary.put("name", "a");
@@ -26,6 +25,15 @@ public class ChristianTest {
         shelter_dictionary.put("address", "SomeAddress");
         shelter_dictionary.put("services", "bed");
         shelter_dictionary.put("phone", "555-5555");
+        return shelter_dictionary;
+    }
+
+    /**
+     * @throws Exception when an error occurs
+     */
+    @Test
+    public void homeless_shelter_equals_is_correct() throws Exception {
+        HashMap<String, Object> shelter_dictionary = getShelterDictionary();
         HomelessShelter a = new HomelessShelter(shelter_dictionary);
 
         //if(o instanceof HomelessShelter) {
@@ -61,7 +69,7 @@ public class ChristianTest {
             //All booleans in return statement have been individually tested.
 
         //} else {
-        assertNotEquals(a, notAShelter);
+        assertNotEquals(a, shelter_dictionary);
         //}
 
     }

@@ -42,12 +42,12 @@ class User {
         this.password = password;
     }
 
-    public User(String name, String id, String password, String accountType,
+    public User(UserInfoStrings infoStrings,
                 @Nullable HomelessShelter shelter, int numSpots) {
-        this.name = name;
-        this.id = id;
-        this.password = password;
-        switch(accountType) {
+        this.name = infoStrings.name;
+        this.id = infoStrings.id;
+        this.password = infoStrings.password;
+        switch(infoStrings.accountType) {
             case ("Homeless User") :
                 this.accountType = AccountType.HOMELESS_USER;
                 break;

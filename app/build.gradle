@@ -35,8 +35,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:12.0.1'
     implementation files('libs/firebase-client-android-2.5.2.jar')
     compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.google.android.gms:play-services:12.0.1'
     implementation files('libs/hamcrest-core-1.3.jar')
+    implementation files('libs/hamcrest-junit-2.0.0.0.jar')
 }
 //test comment to force rebuild
 apply plugin: 'com.google.gms.google-services'
