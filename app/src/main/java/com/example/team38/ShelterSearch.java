@@ -179,7 +179,7 @@ public class ShelterSearch extends AppCompatActivity {
             return false;
         }
         //noinspection ChainedMethodCall
-        return youngAdultDoesNotMatch(s, youngAdultButton.isChecked());
+        return !youngAdultDoesNotMatch(s, youngAdultButton.isChecked());
     }
 
     private void transferToFilteredList() {
