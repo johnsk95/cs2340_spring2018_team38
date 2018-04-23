@@ -55,17 +55,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_maps);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        @SuppressWarnings("ChainedMethodCall") SupportMapFragment mapFragment =
+        SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         // get the shelters from ShelterListView
-        //noinspection ChainedMethodCall
         shelters = getIntent().getParcelableArrayListExtra("SheltersToDisplay");
         // setting up the map
         client = LocationServices.getFusedLocationProviderClient(this);
-        //noinspection ChainedMethodCall
         SupportMapFragment frag = (SupportMapFragment)
                 getSupportFragmentManager().findFragmentById(R.id.map);
         frag.getMapAsync(this);
