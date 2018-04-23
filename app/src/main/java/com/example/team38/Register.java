@@ -72,7 +72,7 @@ public class Register extends AppCompatActivity {
                     t.show();
                 } else {
                     @SuppressWarnings("ChainedMethodCall") User user =
-                            new User(nameBox.getText().toString(), uid, pass,
+                            UserFactory.createUser(nameBox.getText().toString(), uid, pass,
                             (AccountType) accountType.getSelectedItem());
                     //noinspection ChainedMethodCall
                     Log.d("newUser", user.toString());

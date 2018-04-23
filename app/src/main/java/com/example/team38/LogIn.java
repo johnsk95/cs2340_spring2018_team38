@@ -71,8 +71,9 @@ public class LogIn extends AppCompatActivity {
 
                         UserInfoStrings info = new UserInfoStrings(argName, uid, pass,
                                 argAccountType);
-                        User newCurrentUser = new User(info,
+                        User newCurrentUser = UserFactory.createUser(info,
                                 argHomelessShelter, ((argNumSpots != null) ? argNumSpots : 0));
+
                         setCurrentUser(newCurrentUser);
                         startActivity(intent);
                     } else {

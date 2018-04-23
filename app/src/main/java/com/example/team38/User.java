@@ -18,51 +18,51 @@ class User {
     static User currentUser;
 
     //the name of the user
-    private String name;
+    String name;
     //the loginID of the user
-    private String id;
+    String id;
     //what account type the user is
-    private AccountType accountType;
+    AccountType accountType;
     //the password for the user's account
-    private String password;
+    String password;
     //the claimed shelter
     @Nullable
-    private HomelessShelter shelter = null;
+    HomelessShelter shelter = null;
     //the claimed number of beds
-    private int numSpots = 0;
+    int numSpots = 0;
 
     public User() {
 
     }
 
-    public User(String name, String id, String password, AccountType accountType) {
-        this.name = name;
-        this.id = id;
-        this.accountType = accountType;
-        this.password = password;
-    }
-
-    public User(UserInfoStrings infoStrings,
-                @Nullable HomelessShelter shelter, int numSpots) {
-        this.name = infoStrings.name;
-        this.id = infoStrings.id;
-        this.password = infoStrings.password;
-        switch(infoStrings.accountType) {
-            case ("Homeless User") :
-                this.accountType = AccountType.HOMELESS_USER;
-                break;
-            case ("Admin") :
-                this.accountType = AccountType.ADMIN;
-                break;
-            case ("Shelter Employee") :
-                this.accountType = AccountType.SHELTER_EMPLOYEE;
-                break;
-            default:
-                this.accountType = AccountType.HOMELESS_USER;
-        }
-        this.shelter = shelter;
-        this.numSpots = numSpots;
-    }
+//    private User(String name, String id, String password, AccountType accountType) {
+//        this.name = name;
+//        this.id = id;
+//        this.accountType = accountType;
+//        this.password = password;
+//    }
+//
+//    private User(UserInfoStrings infoStrings,
+//                @Nullable HomelessShelter shelter, int numSpots) {
+//        this.name = infoStrings.name;
+//        this.id = infoStrings.id;
+//        this.password = infoStrings.password;
+//        switch(infoStrings.accountType) {
+//            case ("Homeless User") :
+//                this.accountType = AccountType.HOMELESS_USER;
+//                break;
+//            case ("Admin") :
+//                this.accountType = AccountType.ADMIN;
+//                break;
+//            case ("Shelter Employee") :
+//                this.accountType = AccountType.SHELTER_EMPLOYEE;
+//                break;
+//            default:
+//                this.accountType = AccountType.HOMELESS_USER;
+//        }
+//        this.shelter = shelter;
+//        this.numSpots = numSpots;
+//    }
 
     @Override
     public String toString() {
