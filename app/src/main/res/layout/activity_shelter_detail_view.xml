@@ -65,22 +65,23 @@
         android:id="@+id/resNum"
         android:layout_width="0dp"
         android:layout_height="49dp"
-        android:layout_marginBottom="6dp"
+        android:layout_marginBottom="64dp"
         android:ems="10"
         android:inputType="number"
         android:text="0"
         app:layout_constraintBottom_toTopOf="@+id/buttonReserve"
         app:layout_constraintEnd_toEndOf="@+id/buttonReserve"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/buttonReserve"
         tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/numSpotsLabel"
-        android:labelFor="@+id/resNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="# Spots"
+        android:labelFor="@+id/resNum"
+        android:text="# Spots to Reserve"
         app:layout_constraintBottom_toTopOf="@+id/resNum"
         app:layout_constraintStart_toStartOf="@+id/resNum"
         tools:ignore="HardcodedText" />

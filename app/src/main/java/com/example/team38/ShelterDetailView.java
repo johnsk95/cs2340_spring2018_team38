@@ -34,12 +34,13 @@ public class ShelterDetailView extends AppCompatActivity {
         if(shelter == null) {
             return "None";
         }
-        return "Name: \r\r" + shelter.getName() + "\n\nCapacity: \r\r" + shelter.getCapacity()
+        return "Name: \r\r" + shelter.getName()
                 + "\n\nAllowed Tenants: \r\r" + shelter.getAllowed() + "\n\nAddress: \r\r"
                 + shelter.getAddress() + "\n\nLatitude: \r\r" + shelter.getLatitude()
                 + "\nLongitude: \r\r"
                 + shelter.getLongitude() + "\n\nServices: \r\r" + shelter.getServices() +
-                "\n\nPhone Number: \r\r" + shelter.getPhone();
+                "\n\nPhone Number: \r\r" + shelter.getPhone()
+                + "\n\nCapacity: \r\r" + shelter.getCapacity();
     }
 
     /**
