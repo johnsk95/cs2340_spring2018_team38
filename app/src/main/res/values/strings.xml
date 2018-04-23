@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">shelterATL</string>
     <string name="title_activity_shelter_detail_view">ShelterDetailView</string>
+    <string name="title_activity_shelter_search">ShelterSearch</string>
 </resources>

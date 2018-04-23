@@ -11,9 +11,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="112dp"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.697"
+        app:layout_constraintHorizontal_bias="0.762"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,12 +26,15 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:labelFor="@+id/regname"
         android:text="Name"
         app:layout_constraintBottom_toBottomOf="@+id/regname"
         app:layout_constraintEnd_toStartOf="@+id/regname"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.903"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/regname" />
+        app:layout_constraintTop_toTopOf="@+id/regname"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/userID"
@@ -40,26 +44,29 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="username"
+        android:labelFor="@+id/regID"
+        android:text="ID"
         app:layout_constraintBottom_toBottomOf="@+id/regID"
         app:layout_constraintEnd_toStartOf="@+id/regID"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.647"
         app:layout_constraintStart_toStartOf="@+id/name"
         app:layout_constraintTop_toTopOf="@+id/regID"
-        app:layout_constraintVertical_bias="0.167" />
+        app:layout_constraintVertical_bias="0.636"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/regID"
-        android:layout_width="229dp"
-        android:layout_height="wrap_content"
+        android:layout_width="232dp"
+        android:layout_height="45dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        android:inputType="text"
         app:layout_constraintBottom_toTopOf="@+id/regPassword"
         app:layout_constraintEnd_toEndOf="@+id/regname"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/regname"
-        app:layout_constraintTop_toBottomOf="@+id/regname" />
+        app:layout_constraintTop_toBottomOf="@+id/regname"
+        app:layout_constraintVertical_bias="0.576" />
 
     <TextView
         android:id="@+id/password"
@@ -69,20 +76,23 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="password"
+        android:labelFor="@+id/regPassword"
+        android:text="Password"
         app:layout_constraintBottom_toBottomOf="@+id/regPassword"
         app:layout_constraintEnd_toStartOf="@+id/regPassword"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/name"
         app:layout_constraintTop_toTopOf="@+id/regPassword"
-        app:layout_constraintVertical_bias="0.394" />
+        app:layout_constraintVertical_bias="0.818"
+        tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/regPassword"
         android:layout_width="229dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="92dp"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/regname"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/regname"
@@ -93,9 +103,9 @@
         android:layout_width="229dp"
         android:layout_height="41dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="188dp"
+        android:layout_marginTop="160dp"
         app:layout_constraintEnd_toEndOf="@+id/regname"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/regname"
         app:layout_constraintTop_toBottomOf="@+id/regname" />
 
@@ -104,18 +114,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Account Type:"
+        android:text="Account Type"
         app:layout_constraintBottom_toBottomOf="@+id/AccountSpinner"
         app:layout_constraintEnd_toStartOf="@+id/AccountSpinner"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/AccountSpinner"
-        app:layout_constraintVertical_bias="0.583" />
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/buttonReg"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -124,22 +138,44 @@
         android:text="REGISTER"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonCancel"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.773" />
+        app:layout_constraintHorizontal_bias="0.598"
+        app:layout_constraintStart_toStartOf="@+id/buttonCancel"
+        app:layout_constraintTop_toBottomOf="@+id/AccountSpinner"
+        app:layout_constraintVertical_bias="0.114"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/buttonCancel"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:onClick="onCancelClicked"
         android:text="CANCEL"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonReg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.314"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonReg"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="113dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="68dp"
+        android:text="REGISTER"
+        android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.773" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
