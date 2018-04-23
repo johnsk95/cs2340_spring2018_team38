@@ -3,6 +3,7 @@ package com.example.team38;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -48,6 +51,15 @@ public class ShelterDetailView extends AppCompatActivity {
      */
     public void onMapClicked(@SuppressWarnings("unused") View view) {
         Log.d("ShelterDetScreen", "Map Button Pressed");
+        Intent intent = new Intent(this, MapsActivity.class);
+
+        // Maps activity accepts lists of shelter views, so we make a list of the current shelter
+        ArrayList<HomelessShelter> single_shelter_list = new ArrayList<HomelessShelter>();
+        single_shelter_list.add(shelter);
+
+        intent.putParcelableArrayListExtra("SheltersToDisplay",
+                single_shelter_list);
+        startActivity(intent);
     }
 
     /**
