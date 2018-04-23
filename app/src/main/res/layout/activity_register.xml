@@ -90,7 +90,6 @@
         android:id="@+id/regPassword"
         android:layout_width="229dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="92dp"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/regname"
@@ -102,7 +101,6 @@
         android:id="@+id/AccountSpinner"
         android:layout_width="229dp"
         android:layout_height="41dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="160dp"
         app:layout_constraintEnd_toEndOf="@+id/regname"
         app:layout_constraintHorizontal_bias="0.0"
@@ -138,10 +136,9 @@
         android:text="REGISTER"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.598"
+        app:layout_constraintHorizontal_bias="0.618"
         app:layout_constraintStart_toStartOf="@+id/buttonCancel"
-        app:layout_constraintTop_toBottomOf="@+id/AccountSpinner"
-        app:layout_constraintVertical_bias="0.114"
+        app:layout_constraintTop_toBottomOf="@+id/emailInput"
         tools:ignore="HardcodedText" />
 
     <Button
@@ -155,7 +152,7 @@
         android:text="CANCEL"
         app:layout_constraintBottom_toBottomOf="@+id/buttonReg"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.314"
+        app:layout_constraintHorizontal_bias="0.26"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/buttonReg"
         app:layout_constraintVertical_bias="1.0"
@@ -177,5 +174,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/emailInput"
+        android:layout_width="229dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="@+id/regname"
+        app:layout_constraintStart_toStartOf="@+id/regname"
+        app:layout_constraintTop_toBottomOf="@+id/AccountSpinner" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Email"
+        app:layout_constraintEnd_toStartOf="@+id/emailInput"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="393dp" />
 
 </android.support.constraint.ConstraintLayout>
