@@ -56,36 +56,10 @@ public class ShelterListView extends AppCompatActivity {
                     "https://project-42226.firebaseio.com/ShelterList");
             shelter_db.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                public void onDataChange(DataSnapshot snapshot) {
 
-                    // This is literally how it's supposed to be used
-                    // https://www.firebase.com/docs/java-api/javadoc/com/firebase/
-                    // client/GenericTypeIndicator.html
-                    GenericTypeIndicator<ArrayList<HashMap<String, Object>>> typeIndicator =
-                            new GenericTypeIndicator<ArrayList<HashMap<String, Object>>>() {};
-                    Iterator<HashMap<String, Object>> data_iterator;
-                    List<HashMap<String, Object>> data_iterator_map =
-                            dataSnapshot.getValue(typeIndicator);
-                    if (data_iterator_map != null) {
-                        data_iterator = data_iterator_map.iterator();
-                    } else {
-                        data_iterator = new Iterator<HashMap<String, Object>>() {
-                            @Override
-                            public boolean hasNext() {
-                                return false;
-                            }
-
-                            @Override
-                            public HashMap<String, Object> next() {
-                                return null;
-                            }
-                        };
-                    }
-
-                    HashMap<String, Object> datum;
-                    while (data_iterator.hasNext()) {
-                        datum = data_iterator.next();
-                        shelters.add(new HomelessShelter(datum));
+                    for (DataSnapshot snap: snapshot.getChildren()) {
+                        shelters.add(snap.getValue(HomelessShelter.class));
                     }
                     refreshShelterListView();
                 }

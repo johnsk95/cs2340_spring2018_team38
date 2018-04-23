@@ -45,18 +45,6 @@ public class ShelterSearch extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //noinspection ChainedMethodCall,ChainedMethodCall
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
-//        searchButton = (Button) findViewById(R.id.searchbutton);
-//        genderRadioGroup = (RadioGroup) findViewById(R.id.genderButtonGroup);
         nameFilter = findViewById(R.id.shelterSearchNameFilterID);
 
         menButton = findViewById(R.id.genderMen);
@@ -80,38 +68,13 @@ public class ShelterSearch extends AppCompatActivity {
                 "https://project-42226.firebaseio.com/ShelterList");
         shelter_db.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot snapshot) {
 
-                // Literally it's supposed to be empty
-                // https://www.firebase.com/docs/java-api/javadoc/com/firebase/
-                // client/GenericTypeIndicator.html
-                GenericTypeIndicator<ArrayList<HashMap<String, Object>>> typeIndicator =
-                        new GenericTypeIndicator<ArrayList<HashMap<String, Object>>>() {};
-                Iterator<HashMap<String, Object>> data_iterator;
 
-                List<HashMap<String, Object>> data_iterator_map =
-                        dataSnapshot.getValue(typeIndicator);
-                if (data_iterator_map != null) {
-                    data_iterator = data_iterator_map.iterator();
-                } else {
-                    data_iterator = new Iterator<HashMap<String, Object>>() {
-                        @Override
-                        public boolean hasNext() {
-                            return false;
-                        }
-
-                        @Override
-                        public HashMap<String, Object> next() {
-                            return null;
-                        }
-                    };
-                }
-                HashMap<String, Object> datum;
-                while (data_iterator.hasNext()) {
-                    datum = data_iterator.next();
-                    HomelessShelter s = new HomelessShelter(datum);
+                for (DataSnapshot snap: snapshot.getChildren()) {
+                    HomelessShelter s = snap.getValue(HomelessShelter.class);
                     if (includeInSearch(s)) {
-                        shelters.add(new HomelessShelter(datum));
+                        shelters.add(s);
                     }
                 }
                 transferToFilteredList();
