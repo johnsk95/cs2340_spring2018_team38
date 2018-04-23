@@ -157,11 +157,11 @@ class User {
             }
         });
     }
-    public static void makeClaim(final HomelessShelter shelter, final int numSpots) {
+    public static boolean makeClaim(final HomelessShelter shelter, final int numSpots) {
         Log.d("Claim", "Claim started");
         if(currentUser.shelter != null) {
             Log.d("ClaimFail", "User has already claimed a spot!");
-            return;
+            return false;
         }
         if(shelter.getCapacity() >= numSpots) {
             @SuppressWarnings("ChainedMethodCall") final DatabaseReference db =
@@ -197,7 +197,9 @@ class User {
 
                 }
             });
+            return true;
         }
+        return false;
     }
 
 }

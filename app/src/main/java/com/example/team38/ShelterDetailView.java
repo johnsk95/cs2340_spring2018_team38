@@ -2,11 +2,13 @@ package com.example.team38;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,31 +27,7 @@ public class ShelterDetailView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelter_detail_view);
-
-        //noinspection ChainedMethodCall
-        shelter = getIntent().getParcelableExtra("HomelessShelter");
-        Log.d("ShelterDetailView", "Shelter ID: " + shelter.getId() + " " + shelter.getName());
-        //HomelessShelter shelter_old = getIntent().getParcelableExtra("HomelessShelter");
-        @SuppressWarnings("ChainedMethodCall") final DatabaseReference shelter_db =
-                FirebaseDatabase.getInstance().getReferenceFromUrl(
-                "https://project-42226.firebaseio.com/ShelterList/" + shelter.getId());
-        shelter_db.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                HomelessShelter shelter_ = dataSnapshot.getValue(HomelessShelter.class);
-                setShelter(shelter_);
-                TextView infoDisplay = findViewById(R.id.ShelterInfoBox);
-                infoDisplay.setText(shelterToTextString(shelter_));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-//        TextView infoDisplay = (TextView) findViewById(R.id.ShelterInfoBox);
-//
-//        infoDisplay.setText(shelterToTextString(shelter));
+        refreshShelterInfo();
     }
 
     private CharSequence shelterToTextString(HomelessShelter shelter) {
@@ -79,10 +57,47 @@ public class ShelterDetailView extends AppCompatActivity {
         final EditText resNumBox = findViewById(R.id.resNum);
         @SuppressWarnings("ChainedMethodCall") final int numSpots = Integer.parseInt(resNumBox
                 .getText().toString());
-        User.makeClaim(shelter, numSpots);
-//        Intent intent = new Intent(this, UserView.class);
-        Intent intent = new Intent(this, ShelterListView.class);
-        startActivity(intent);
+
+        Toast t = Toast.makeText(getApplicationContext(),
+                "registration failed: userID is already in use", Toast.LENGTH_SHORT);
+
+        if (User.makeClaim(shelter, numSpots)) {
+            t.setText("Reservation successful!");
+        } else {
+            t.setText("Reservation failure: inadequate capacity, " +
+                    "or user already has a reservation");
+        }
+        t.show();
+        // TODO Make a toast indicating success or failure, refresh current view
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                refreshShelterInfo();
+            }
+        }, Parameters.WAIT_REFRESH_MILLIS);
+    }
+
+    private void refreshShelterInfo() {
+        shelter = getIntent().getParcelableExtra("HomelessShelter");
+        Log.d("ShelterDetailView", "Shelter ID: " + shelter.getId() + " " + shelter.getName());
+        @SuppressWarnings("ChainedMethodCall") final DatabaseReference shelter_db =
+                FirebaseDatabase.getInstance().getReferenceFromUrl(
+                        "https://project-42226.firebaseio.com/ShelterList/" + shelter.getId());
+        shelter_db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                HomelessShelter shelter_ = dataSnapshot.getValue(HomelessShelter.class);
+                setShelter(shelter_);
+                TextView infoDisplay = findViewById(R.id.ShelterInfoBox);
+                infoDisplay.setText(shelterToTextString(shelter_));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void setShelter(HomelessShelter shelter) {
