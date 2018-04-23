@@ -131,30 +131,30 @@ public class ShelterSearch extends AppCompatActivity {
     // so for example, failOnWomen would fail if the "allowed" field doesn't contain women, and the
     // box indicating that women are being looked for is checked.
     private static boolean failOnNames(HomelessShelter s, String nameToContain) {
-        return !s.name.toLowerCase().contains(nameToContain.toLowerCase());
+        return !s.getName().toLowerCase().contains(nameToContain.toLowerCase());
     }
     // true if the shelter should not be included in the search
     // true if looking for men's shelter and the shelter is not a men's shelter
     static boolean failOnMen(HomelessShelter s, boolean lookingForMen) {
-        return lookingForMen && !s.allowed.toLowerCase().replace("women",
+        return lookingForMen && !s.getAllowed().toLowerCase().replace("women",
                 "").contains("men");
     }
     static boolean failOnWomen(HomelessShelter s, boolean lookingForWomen) {
 
-        return lookingForWomen && !s.allowed.toLowerCase().contains("women");
+        return lookingForWomen && !s.getAllowed().toLowerCase().contains("women");
     }
     private static boolean failOnNewborn(HomelessShelter s, boolean lookingForNewborns) {
         return lookingForNewborns &&
-                !s.allowed.toLowerCase().contains("newborn");
+                !s.getAllowed().toLowerCase().contains("newborn");
     }
     private static boolean childrenDoesNotMatch(HomelessShelter s, boolean lookingForChildren) {
         return lookingForChildren &&
-                !s.allowed.toLowerCase().contains("children");
+                !s.getAllowed().toLowerCase().contains("children");
     }
     private static boolean youngAdultDoesNotMatch(HomelessShelter s, boolean lookingForYoungAdults)
     {
         return lookingForYoungAdults &&
-                !s.allowed.toLowerCase().contains("young adult");
+                !s.getAllowed().toLowerCase().contains("young adult");
     }
 
     private boolean includeInSearch(HomelessShelter s) {

@@ -96,12 +96,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         // adds the shelter markers to the map
         int counter = 0;
         for (HomelessShelter shelter: shelters) {
-            LatLng shelterLoc = new LatLng(shelter.longitude, shelter.latitude);
+            LatLng shelterLoc = new LatLng(shelter.getLongitude(), shelter.getLatitude());
             marker = shelterMap.addMarker(
                     new MarkerOptions()
                     .position(shelterLoc)
-                    .title(shelter.name)
-            .snippet("Phone: " + shelter.phoneNumber));
+                    .title(shelter.getName())
+            .snippet("Phone: " + shelter.getPhoneNumber()));
             // sets tag to location in shelters array
             marker.setTag(counter);
             counter++;

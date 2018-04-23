@@ -39,8 +39,8 @@ public class UserFactory {
                 accountType = AccountType.HOMELESS_USER;
         }
         User toReturn = createUser(name, id, password, accountType);
-        toReturn.shelter = shelter;
-        toReturn.numSpots = numSpots;
+        toReturn.setShelter(shelter);
+        toReturn.setNumSpots(numSpots);
 
         return toReturn;
     }

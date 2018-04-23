@@ -3,6 +3,7 @@ package com.example.team38;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -14,15 +15,88 @@ import java.util.HashMap;
 public class HomelessShelter implements Parcelable {
     // 0,My Sister's House,264,Women/Children,-84.410142,33.780174,"921 Howell Mill Road, Atlanta,
     // Georgia 30318","Temporary, Emergency, Residential Recovery",(404) 367-2465
-    int id;
-    String name;
-    long capacity;
-    String allowed;
-    double latitude;
-    double longitude;
-    String address;
-    String shelterType;
-    String phoneNumber;
+    private int id;
+    private String name;
+    private long capacity;
+    private String allowed;
+    private double latitude;
+    private double longitude;
+    private String address;
+    private String shelterType;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public long getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(long capacity) {
+        this.capacity = capacity;
+    }
+
+    public String getAllowed() {
+        return allowed;
+    }
+
+    public void setAllowed(String allowed) {
+        this.allowed = allowed;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getShelterType() {
+        return shelterType;
+    }
+
+    public void setShelterType(String shelterType) {
+        this.shelterType = shelterType;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    private String phoneNumber;
 
     // Regex for getting info from string
     // String infoMatcher = "([0-9]+?),(.*?),(.*?),(.*?),(.*?),(.*?),\"(.*?)\",\"(.*?)\",(.*)";

@@ -111,7 +111,7 @@ public class UserView extends AppCompatActivity {
 //        else if(shelter.equals(HomelessShelter.NULL_SHELTER)) {
 //            return "None";
 //        }
-        return shelter.name;
+        return shelter.getName();
     }
 
     /**

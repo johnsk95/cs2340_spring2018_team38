@@ -18,30 +18,53 @@ class User {
     static User currentUser;
 
     //the name of the user
-    String name;
+    private String name;
     //the loginID of the user
-    String id;
+    private String id;
     //what account type the user is
-    AccountType accountType;
+    private AccountType accountType;
     //the password for the user's account
-    String password;
+    private String password;
     //the claimed shelter
     @Nullable
-    HomelessShelter shelter = null;
+    private HomelessShelter shelter = null;
     //the claimed number of beds
-    int numSpots = 0;
+    private int numSpots = 0;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setShelter(@Nullable HomelessShelter shelter) {
+        this.shelter = shelter;
+    }
+
+    public void setNumSpots(int numSpots) {
+        this.numSpots = numSpots;
+    }
 
     public User() {
 
     }
 
-//    private User(String name, String id, String password, AccountType accountType) {
-//        this.name = name;
-//        this.id = id;
-//        this.accountType = accountType;
-//        this.password = password;
-//    }
-//
+    User(String name, String id, String password) {
+        this.name = name;
+        this.id = id;
+        this.password = password;
+    }
+
 //    private User(UserInfoStrings infoStrings,
 //                @Nullable HomelessShelter shelter, int numSpots) {
 //        this.name = infoStrings.name;
@@ -110,7 +133,7 @@ class User {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 @SuppressWarnings("ChainedMethodCall") Long cap = dataSnapshot.child("ShelterList")
-                        .child("" + currentUser.shelter.id)
+                        .child("" + currentUser.shelter.getId())
                         .child("capacity").getValue(Long.class);
                 if(cap == null) {
                     cap = (long) currentUser.numSpots;
@@ -118,7 +141,7 @@ class User {
                     cap += currentUser.numSpots;
                 }
                 //noinspection ChainedMethodCall,ChainedMethodCall,ChainedMethodCall
-                db.child("ShelterList").child("" + currentUser.shelter.id).child("capacity")
+                db.child("ShelterList").child("" + currentUser.shelter.getId()).child("capacity")
                         .setValue(cap);
                 //noinspection ChainedMethodCall,ChainedMethodCall,ChainedMethodCall
                 db.child("UserList").child(currentUser.getId()).child("shelter").setValue(null);
@@ -140,7 +163,7 @@ class User {
             Log.d("ClaimFail", "User has already claimed a spot!");
             return;
         }
-        if(shelter.capacity >= numSpots) {
+        if(shelter.getCapacity() >= numSpots) {
             @SuppressWarnings("ChainedMethodCall") final DatabaseReference db =
                     FirebaseDatabase.getInstance().getReferenceFromUrl(
                     "https://project-42226.firebaseio.com");
@@ -149,11 +172,11 @@ class User {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Log.d("ClaimSuccess", "The claim was successful!");
                     @SuppressWarnings("ChainedMethodCall") Long cap =
-                            dataSnapshot.child("ShelterList/" + shelter.id)
+                            dataSnapshot.child("ShelterList/" + shelter.getId())
                             .child("capacity").getValue(Long.class);
                     if((cap != null) && (cap >= numSpots)) {
                         //noinspection ChainedMethodCall,ChainedMethodCall
-                        db.child("ShelterList/" + shelter.id).child("capacity").setValue(
+                        db.child("ShelterList/" + shelter.getId()).child("capacity").setValue(
                                 cap - numSpots);
                         //noinspection ChainedMethodCall,ChainedMethodCall,ChainedMethodCall
                         db.child("UserList").child(currentUser.getId()).child("shelter")

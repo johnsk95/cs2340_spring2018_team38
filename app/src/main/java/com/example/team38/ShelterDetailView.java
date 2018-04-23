@@ -28,11 +28,11 @@ public class ShelterDetailView extends AppCompatActivity {
 
         //noinspection ChainedMethodCall
         shelter = getIntent().getParcelableExtra("HomelessShelter");
-        Log.d("ShelterDetailView", "Shelter ID: " + shelter.id + " " + shelter.name);
+        Log.d("ShelterDetailView", "Shelter ID: " + shelter.getId() + " " + shelter.getName());
         //HomelessShelter shelter_old = getIntent().getParcelableExtra("HomelessShelter");
         @SuppressWarnings("ChainedMethodCall") final DatabaseReference shelter_db =
                 FirebaseDatabase.getInstance().getReferenceFromUrl(
-                "https://project-42226.firebaseio.com/ShelterList/" + shelter.id);
+                "https://project-42226.firebaseio.com/ShelterList/" + shelter.getId());
         shelter_db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -56,11 +56,12 @@ public class ShelterDetailView extends AppCompatActivity {
         if(shelter == null) {
             return "None";
         }
-        return "Name: \r\r" + shelter.name + "\n\nCapacity: \r\r" + shelter.capacity
-                + "\n\nAllowed Tenants: \r\r" + shelter.allowed + "\n\nAddress: \r\r"
-                + shelter.address + "\n\nLatitude: \r\r" + shelter.latitude + "\nLongitude: \r\r"
-                + shelter.longitude + "\n\nServices: \r\r" + shelter.shelterType +
-                "\n\nPhone Number: \r\r" + shelter.phoneNumber;
+        return "Name: \r\r" + shelter.getName() + "\n\nCapacity: \r\r" + shelter.getCapacity()
+                + "\n\nAllowed Tenants: \r\r" + shelter.getAllowed() + "\n\nAddress: \r\r"
+                + shelter.getAddress() + "\n\nLatitude: \r\r" + shelter.getLatitude()
+                + "\nLongitude: \r\r"
+                + shelter.getLongitude() + "\n\nServices: \r\r" + shelter.getShelterType() +
+                "\n\nPhone Number: \r\r" + shelter.getPhoneNumber();
     }
 
     /**
