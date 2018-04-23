@@ -101,7 +101,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     new MarkerOptions()
                     .position(shelterLoc)
                     .title(shelter.getName())
-            .snippet("Phone: " + shelter.getPhoneNumber()));
+            .snippet("Phone: " + shelter.getPhone()));
             // sets tag to location in shelters array
             marker.setTag(counter);
             counter++;

@@ -3,7 +3,6 @@ package com.example.team38;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -22,7 +21,8 @@ public class HomelessShelter implements Parcelable {
     private double latitude;
     private double longitude;
     private String address;
-    private String shelterType;
+    private String services;
+    private String phone;
 
     public int getId() {
         return id;
@@ -80,23 +80,21 @@ public class HomelessShelter implements Parcelable {
         this.address = address;
     }
 
-    public String getShelterType() {
-        return shelterType;
+    public String getServices() {
+        return services;
     }
 
-    public void setShelterType(String shelterType) {
-        this.shelterType = shelterType;
+    public void setServices(String services) {
+        this.services = services;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
-
-    private String phoneNumber;
 
     // Regex for getting info from string
     // String infoMatcher = "([0-9]+?),(.*?),(.*?),(.*?),(.*?),(.*?),\"(.*?)\",\"(.*?)\",(.*)";
@@ -126,8 +124,8 @@ public class HomelessShelter implements Parcelable {
         latitude = Double.parseDouble(info_parts[4]);
         longitude = Double.parseDouble(info_parts[5]);
         address = info_parts[6];
-        shelterType = info_parts[7];
-        phoneNumber = info_parts[8];
+        services = info_parts[7];
+        phone = info_parts[8];
 
     }
 
@@ -146,8 +144,8 @@ public class HomelessShelter implements Parcelable {
         latitude = in.readDouble();
         longitude = in.readDouble();
         address = in.readString();
-        shelterType = in.readString();
-        phoneNumber = in.readString();
+        services = in.readString();
+        phone = in.readString();
     }
 
     /**
@@ -167,8 +165,8 @@ public class HomelessShelter implements Parcelable {
         latitude = (Double) shelter_dictionary.get("latitude");
         longitude = (Double) shelter_dictionary.get("longitude");
         address = (String) shelter_dictionary.get("address");
-        shelterType = (String) shelter_dictionary.get("services");
-        phoneNumber = (String) shelter_dictionary.get("phone");
+        services = (String) shelter_dictionary.get("services");
+        phone = (String) shelter_dictionary.get("phone");
     }
 
     @Override
@@ -181,8 +179,8 @@ public class HomelessShelter implements Parcelable {
         dest.writeDouble(latitude);
         dest.writeDouble(longitude);
         dest.writeString(address);
-        dest.writeString(shelterType);
-        dest.writeString(phoneNumber);
+        dest.writeString(services);
+        dest.writeString(phone);
     }
 
     @Override
@@ -213,7 +211,7 @@ public class HomelessShelter implements Parcelable {
             HomelessShelter s = (HomelessShelter) o;
             return (id == s.id) && name.equals(s.name) && (latitude == s.latitude)
                     && (longitude == s.longitude) && (address.equals(s.address)) &&
-                    (shelterType.equals(s.shelterType)) && (phoneNumber.equals(s.phoneNumber));
+                    (services.equals(s.services)) && (phone.equals(s.phone));
         }
         return false;
     }
