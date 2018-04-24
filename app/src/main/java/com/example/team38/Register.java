@@ -1,15 +1,18 @@
 package com.example.team38;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.team38.mail.SendMailIntentService;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +35,7 @@ public class Register extends AppCompatActivity {
     private EditText emailBox;
     private Spinner accountType; //Spinner used for the user type
 
+    private String oldEmail = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,13 @@ public class Register extends AppCompatActivity {
             return;
         }
 
+        if (!Patterns.EMAIL_ADDRESS.matcher(emailBox.getText().toString()).matches()) {
+            Toast t = Toast.makeText(getApplicationContext(),
+                    "Invalid email", Toast.LENGTH_LONG);
+            t.show();
+            return;
+        }
+
         final String pass = passBox.getText().toString();
         final DatabaseReference db =
                 FirebaseDatabase.getInstance().getReferenceFromUrl(
@@ -87,6 +98,26 @@ public class Register extends AppCompatActivity {
                             "registration failed: userID is already in use", duration);
                     t.show();
                 } else {
+                    if (!emailBox.getText().toString().equals(oldEmail)) {
+                        Toast t = Toast.makeText(getApplicationContext(),
+                                "Ensure that you receive the confirmation email " +
+                                "before clicking again", Toast.LENGTH_LONG);
+                        t.show();
+                        oldEmail = emailBox.getText().toString();
+
+                        Intent msgIntent = new Intent(getApplicationContext(),
+                                SendMailIntentService.class);
+                        msgIntent.putExtra(SendMailIntentService.PARAM_SUBJECT,
+                                "Email confirmation");
+                        msgIntent.putExtra(SendMailIntentService.PARAM_MESSAGE,
+                                "You put in the right email, hooray!");
+                        msgIntent.putExtra(SendMailIntentService.PARAM_RECIPIENT,
+                                emailBox.getText().toString());
+                        startService(msgIntent);
+
+                        return;
+                    }
+
                     User user = UserFactory.createUser(nameBox.getText().toString(), uid, pass,
                             emailBox.getText().toString(),
                             (AccountType) accountType.getSelectedItem());
@@ -94,6 +125,9 @@ public class Register extends AppCompatActivity {
                     Log.d("newUser", user.toString());
 
                     db.child(uid).setValue(user);
+                    Toast t = Toast.makeText(getApplicationContext(),
+                            "Registration success!", Toast.LENGTH_SHORT);
+                    t.show();
                     finish();
                 }
             }
