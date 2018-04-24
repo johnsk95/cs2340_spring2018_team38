@@ -16,6 +16,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.regex.Pattern;
+
 /**
  * Created by Nathaniel on 2/18/2018.
  *
@@ -27,6 +29,7 @@ public class Register extends AppCompatActivity {
     private EditText nameBox;
     private EditText idBox;
     private EditText passBox;
+    private EditText emailBox;
     private Spinner accountType; //Spinner used for the user type
 
 
@@ -40,6 +43,7 @@ public class Register extends AppCompatActivity {
         nameBox = findViewById(R.id.regname);
         idBox = findViewById(R.id.regID);
         passBox = findViewById(R.id.regPassword);
+        emailBox = findViewById(R.id.emailInput);
         accountType = findViewById(R.id.AccountSpinner);
 
         //puts the possible user types into the spinner
@@ -56,9 +60,21 @@ public class Register extends AppCompatActivity {
         Log.d("RegScreen", "Register Button Pressed");
         //registers as a new user if the id is not already in use,
         //shows an error message if the id is in use
-        @SuppressWarnings("ChainedMethodCall") final String uid = idBox.getText().toString();
-        @SuppressWarnings("ChainedMethodCall") final String pass = passBox.getText().toString();
-        @SuppressWarnings("ChainedMethodCall") final DatabaseReference db =
+        final String uid = idBox.getText().toString().toLowerCase();
+
+        // Ensure that the userid is alphanumeric, since it will be used as an ID in database
+        Pattern p = Pattern.compile("[^a-zA-Z0-9]");
+        boolean hasSpecialChar = p.matcher(uid).find();
+
+        if (hasSpecialChar || uid.length() == 0) {
+            final Toast t = Toast.makeText(getApplicationContext(),
+                    "Username must be alphanumeric characters only", Toast.LENGTH_LONG);
+            t.show();
+            return;
+        }
+
+        final String pass = passBox.getText().toString();
+        final DatabaseReference db =
                 FirebaseDatabase.getInstance().getReferenceFromUrl(
                 "https://project-42226.firebaseio.com/UserList");
         db.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -71,12 +87,12 @@ public class Register extends AppCompatActivity {
                             "registration failed: userID is already in use", duration);
                     t.show();
                 } else {
-                    @SuppressWarnings("ChainedMethodCall") User user =
-                            UserFactory.createUser(nameBox.getText().toString(), uid, pass,
+                    User user = UserFactory.createUser(nameBox.getText().toString(), uid, pass,
+                            emailBox.getText().toString(),
                             (AccountType) accountType.getSelectedItem());
-                    //noinspection ChainedMethodCall
+
                     Log.d("newUser", user.toString());
-                    //noinspection ChainedMethodCall
+
                     db.child(uid).setValue(user);
                     finish();
                 }
@@ -84,6 +100,10 @@ public class Register extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError firebaseError) {
+                final Toast t = Toast.makeText(getApplicationContext(),
+                        "Error registering user with database- check connectivity",
+                        Toast.LENGTH_LONG);
+                t.show();
             }
         });
     }

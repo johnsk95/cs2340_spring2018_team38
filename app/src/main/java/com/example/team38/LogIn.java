@@ -9,11 +9,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.team38.mail.SendMailIntentService;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 
 /**
  * Created by johnyi on 2/13/18.
@@ -28,6 +30,53 @@ public class LogIn extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
+    public void onRecoverClicked(View view) {
+        final EditText nameBox = findViewById(R.id.ID);
+        final String lost_username = nameBox.getText().toString().toLowerCase();
+
+        final DatabaseReference db =
+                FirebaseDatabase.getInstance().getReferenceFromUrl(
+                        "https://project-42226.firebaseio.com/UserList");
+
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.hasChild(lost_username)) {
+                    User lostUser = dataSnapshot.child(lost_username).getValue(User.class);
+                    Intent msgIntent = new Intent(getApplicationContext(),
+                            SendMailIntentService.class);
+                    msgIntent.putExtra(SendMailIntentService.PARAM_SUBJECT,
+                            "Password recovery");
+                    msgIntent.putExtra(SendMailIntentService.PARAM_MESSAGE,
+                            "Your password is " + lostUser.getPassword());
+                    msgIntent.putExtra(SendMailIntentService.PARAM_RECIPIENT,
+                            "anish.moorthy@gmail.com");
+                    startService(msgIntent);
+
+                    final Toast t = Toast.makeText(getApplicationContext(),
+                            "Sending recovery email: it should arrive in a minute",
+                            Toast.LENGTH_SHORT);
+                    t.show();
+
+                } else {
+                    final Toast t = Toast.makeText(getApplicationContext(),
+                            "the user id does not exist",
+                            Toast.LENGTH_SHORT);
+                    t.show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError firebaseError) {
+                Log.e("database", "Database read cancelled");
+                final Toast t = Toast.makeText(getApplicationContext(),
+                        "Error reading from database",
+                        Toast.LENGTH_SHORT);
+                t.show();
+            }
+        });
+    }
+
     /**
      * @param view the thing to operate on
      */
@@ -37,7 +86,8 @@ public class LogIn extends AppCompatActivity {
         final EditText nameBox = findViewById(R.id.ID);
         final EditText pwBox = findViewById(R.id.PW);
         //view username and password
-        @SuppressWarnings("ChainedMethodCall") final String uid = nameBox.getText().toString();
+        @SuppressWarnings("ChainedMethodCall") final String uid = nameBox.getText().toString()
+                .toLowerCase();
         @SuppressWarnings("ChainedMethodCall") final String pass = pwBox.getText().toString();
         Log.d("user", uid);
         Log.d("pw", pass); //Why are we logging passwords?
@@ -56,23 +106,7 @@ public class LogIn extends AppCompatActivity {
                     if(pass.equals(pwd)) {
                         Log.d("LoginScreen", "Correct login!");
 
-                        // String name, String uid, String pass, String accountType,
-                        // HomelessShelter shelter, Integer numSpots
-
-                        String argName = dataSnapshot.child(uid).child("name")
-                                .getValue(String.class);
-                        String argAccountType = dataSnapshot.child(uid).child("accountType")
-                                .getValue(String.class);
-                        HomelessShelter argHomelessShelter = dataSnapshot.child(uid)
-                                .child("shelter")
-                                .getValue(HomelessShelter.class);
-                        Integer argNumSpots = dataSnapshot.child(uid).child("numSpots")
-                                .getValue(Integer.class);
-
-                        UserInfoStrings info = new UserInfoStrings(argName, uid, pass,
-                                argAccountType);
-                        User newCurrentUser = UserFactory.createUser(info,
-                                argHomelessShelter, ((argNumSpots != null) ? argNumSpots : 0));
+                        User newCurrentUser = dataSnapshot.child(uid).getValue(User.class);
 
                         setCurrentUser(newCurrentUser);
                         startActivity(intent);
@@ -101,4 +135,5 @@ public class LogIn extends AppCompatActivity {
     private static void setCurrentUser(User newCurrentUser) {
         User.currentUser = newCurrentUser;
     }
+
 }

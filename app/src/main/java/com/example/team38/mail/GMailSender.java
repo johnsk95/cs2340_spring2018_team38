@@ -29,9 +29,9 @@ public class GMailSender extends javax.mail.Authenticator {
         Security.addProvider(new JSSEProvider());
     }
 
-    public GMailSender(String user, String password) {
-        this.user = user;
-        this.password = password;
+    public GMailSender() {
+        this.user = "janc.team38@gmail.com";
+        this.password = "oth8Iu-h'o.seeX*";
 
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
@@ -51,10 +51,11 @@ public class GMailSender extends javax.mail.Authenticator {
         return new PasswordAuthentication(user, password);
     }
 
-    public synchronized void sendMail(String subject, String body, String sender, String recipients) throws Exception {
-        try{
+    public synchronized void sendMail(String subject, String body, String sender, String recipients)
+            throws Exception {
             MimeMessage message = new MimeMessage(session);
-            DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/plain"));
+            DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(),
+                    "text/plain"));
             message.setSender(new InternetAddress(sender));
             message.setSubject(subject);
             message.setDataHandler(handler);
@@ -63,9 +64,6 @@ public class GMailSender extends javax.mail.Authenticator {
             else
                 message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
             Transport.send(message);
-        }catch(Exception e){
-
-        }
     }
 
     public class ByteArrayDataSource implements DataSource {

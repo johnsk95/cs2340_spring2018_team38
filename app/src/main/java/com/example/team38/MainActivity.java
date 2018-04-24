@@ -11,9 +11,6 @@ import android.view.View;
  */
 public class MainActivity extends AppCompatActivity {
 
-    //Map for registered users for M5
-//    private static Map<String, User> userMap = new HashMap<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +34,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Register.class);
         startActivity(intent);
     }
-
-
-//    public static Map<String, User> getUserMap() {
-//        return userMap;
-//    }
 }
 

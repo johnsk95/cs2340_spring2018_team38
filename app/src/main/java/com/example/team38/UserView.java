@@ -88,6 +88,7 @@ public class UserView extends AppCompatActivity {
     }
     private CharSequence userToTextString(User user) {
         return "Name: \r\r" + user.getName()
+                + "\n\nEmail: \r\r" + user.getEmail()
                 + "\n\nUsername: \r\r" + user.getId()
                 + "\n\nAccount Type: \r\r" + user.getAccountType()
                 + "\n\nCurrently Booked Shelter: \r\r" + shelterName(user.getShelter())

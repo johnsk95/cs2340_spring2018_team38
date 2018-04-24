@@ -38,7 +38,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private GoogleMap shelterMap;
     private List<HomelessShelter> shelters;
-    @SuppressWarnings("unused")
     private Marker marker;
     private FusedLocationProviderClient client;
     private LocationRequest request;

@@ -17,14 +17,12 @@ import com.google.firebase.database.ValueEventListener;
 class User {
     static User currentUser;
 
-    //the name of the user
     private String name;
-    //the loginID of the user
     private String id;
-    //what account type the user is
     private AccountType accountType;
-    //the password for the user's account
     private String password;
+    private String email;
+
     //the claimed shelter
     @Nullable
     private HomelessShelter shelter = null;
@@ -55,42 +53,29 @@ class User {
         this.numSpots = numSpots;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public User() {
 
     }
 
-    User(String name, String id, String password) {
+    User(String name, String id, String password, String email) {
         this.name = name;
         this.id = id;
         this.password = password;
+        this.email = email;
     }
-
-//    private User(UserInfoStrings infoStrings,
-//                @Nullable HomelessShelter shelter, int numSpots) {
-//        this.name = infoStrings.name;
-//        this.id = infoStrings.id;
-//        this.password = infoStrings.password;
-//        switch(infoStrings.accountType) {
-//            case ("Homeless User") :
-//                this.accountType = AccountType.HOMELESS_USER;
-//                break;
-//            case ("Admin") :
-//                this.accountType = AccountType.ADMIN;
-//                break;
-//            case ("Shelter Employee") :
-//                this.accountType = AccountType.SHELTER_EMPLOYEE;
-//                break;
-//            default:
-//                this.accountType = AccountType.HOMELESS_USER;
-//        }
-//        this.shelter = shelter;
-//        this.numSpots = numSpots;
-//    }
 
     @Override
     public String toString() {
         return "name: " + name + "  id: " + id + "  account type: " + accountType.toString()
-                + "  password: " + password;
+                + "  password: " + password + " email " + email;
     }
 
     public String getName() {
@@ -164,14 +149,14 @@ class User {
             return false;
         }
         if(shelter.getCapacity() >= numSpots) {
-            @SuppressWarnings("ChainedMethodCall") final DatabaseReference db =
+            final DatabaseReference db =
                     FirebaseDatabase.getInstance().getReferenceFromUrl(
                     "https://project-42226.firebaseio.com");
             db.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Log.d("ClaimSuccess", "The claim was successful!");
-                    @SuppressWarnings("ChainedMethodCall") Long cap =
+                    Long cap =
                             dataSnapshot.child("ShelterList/" + shelter.getId())
                             .child("capacity").getValue(Long.class);
                     if((cap != null) && (cap >= numSpots)) {
