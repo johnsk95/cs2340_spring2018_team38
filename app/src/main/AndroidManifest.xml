@@ -34,12 +34,10 @@
             android:label="Register" />
         <activity
             android:name=".ShelterDetailView"
-            android:label="@string/title_activity_shelter_detail_view"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_shelter_detail_view" />
         <activity
             android:name=".ShelterSearch"
-            android:label="@string/title_activity_shelter_search"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_shelter_search" />
         <activity
             android:name=".MapsActivity"
             android:label="Map" />

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,7 +26,9 @@ public class UserView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_view);
-
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("User Information");
         //HomelessShelter shelter = getIntent().getParcelableExtra("HomelessShelter");
         //reservationSuccess = getIntent().getBooleanExtra("Success", false);
         @SuppressWarnings("ChainedMethodCall") final DatabaseReference db = FirebaseDatabase

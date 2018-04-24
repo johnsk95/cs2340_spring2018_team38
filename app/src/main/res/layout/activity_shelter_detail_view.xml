@@ -18,22 +18,23 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </android.support.design.widget.AppBarLayout>
+
 
     <include
         android:id="@+id/UserInfoBox"
         layout="@layout/content_shelter_detail_view"
         android:layout_width="0dp"
         android:layout_height="350dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/resNum"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
@@ -63,27 +64,27 @@
 
     <EditText
         android:id="@+id/resNum"
-        android:layout_width="0dp"
+        android:layout_width="68dp"
         android:layout_height="49dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="28dp"
         android:ems="10"
+        android:hint="hello"
         android:inputType="number"
         android:text="0"
+        android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/buttonReserve"
-        app:layout_constraintEnd_toEndOf="@+id/buttonReserve"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/buttonReserve"
+        app:layout_constraintStart_toStartOf="@+id/numSpotsLabel"
         tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/numSpotsLabel"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="16dp"
         android:labelFor="@+id/resNum"
-        android:text="# Spots to Reserve"
+        android:text="Spots to Reserve"
         app:layout_constraintBottom_toTopOf="@+id/resNum"
-        app:layout_constraintStart_toStartOf="@+id/resNum"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="HardcodedText" />
 
 </android.support.constraint.ConstraintLayout>

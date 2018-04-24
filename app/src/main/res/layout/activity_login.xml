@@ -75,14 +75,15 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="138dp"
+        android:layout_height="51dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:onClick="onLoginClicked"
         android:text="LOGIN"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,14 +93,15 @@
 
     <Button
         android:id="@+id/RecoveryButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="131dp"
+        android:layout_height="40dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:onClick="onRecoverClicked"
-        android:text="Recover Email"
+        android:text="forgot password"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,14 +110,17 @@
 
     <TextView
         android:id="@+id/textView7"
-        android:layout_width="269dp"
-        android:layout_height="57dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginEnd="8dp"
-        android:text="Fill in the username field and then press this to receive an email with your password"
-        app:layout_constraintBottom_toTopOf="@+id/RecoveryButton"
+        android:layout_width="272dp"
+        android:layout_height="21dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Fill in username and press to receive email with password"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/RecoveryButton"
-        app:layout_constraintHorizontal_bias="0.469"
-        app:layout_constraintStart_toStartOf="@+id/RecoveryButton" />
+        app:layout_constraintHorizontal_bias="0.463"
+        app:layout_constraintStart_toStartOf="@+id/RecoveryButton"
+        app:layout_constraintTop_toBottomOf="@+id/RecoveryButton"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
